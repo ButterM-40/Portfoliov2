@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="./portfolio-data.js"></script>
+<style>
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; padding:0; background:#FFF2EC; }
+  ::selection{ background:#FFDA14; color:#111827; }
+  @keyframes pop{ 0%{transform:scale(0);} 70%{transform:scale(1.14);} 100%{transform:scale(1);} }
+  :root{
+    --page:#FFF2EC; --hero:linear-gradient(135deg,#FF5E5E 0%,#FF8169 100%);
+    --stat:linear-gradient(135deg,#FFD914 0%,#FF8A3D 100%); --stat-ink:#111827; --stat-label:#5A3A00;
+    --feature:linear-gradient(135deg,#FF5E5E 0%,#FF8169 100%);
+    --band:linear-gradient(135deg,#FFEADE 0%,#FFDCEC 100%); --band-alt:linear-gradient(135deg,#ECE6FF 0%,#DEF1FF 100%);
+    --ink:#111827; --soft:#6B5B55; --eyebrow:#C2410C;
+    --card:#FFFFFF; --card-ink:#111827; --card-soft:#8A8AA0;
+    --border:#111827; --shadow:#111827; --chip-bg:#FFF4EE; --chip-border:#F0D9CE;
+    --accent:#FF5E5E; --on-accent:#FFFFFF; --accent-2:#FFDA14;
+    --nav-bg:rgba(255,255,255,0.88); --foot:#111827; --foot-ink:#FFFFFF; --foot-soft:#9A8E88;
+    --portrait:repeating-linear-gradient(45deg,#FFE2D6 0 10px,#FFEFE8 10px 20px);
+    --s-projects:#162060; --s-skills:#0B2D1E; --s-exp:#2E1506; --s-research:#1B0836; --s-about:#082820;
+  }
+  [data-theme="midnight"]{
+    --page:#14101F; --hero:linear-gradient(160deg,#241C42 0%,#14101F 100%);
+    --stat:#1B1430; --stat-ink:#FFDA14; --stat-label:#9C8FD6;
+    --feature:linear-gradient(160deg,#1B1430 0%,#241C42 100%);
+    --band:linear-gradient(160deg,#16111F 0%,#1E1736 100%); --band-alt:linear-gradient(160deg,#1E1736 0%,#251D44 100%);
+    --ink:#F5F2FF; --soft:#A99FD6; --eyebrow:#2EE6C5;
+    --card:#221C3A; --card-ink:#F5F2FF; --card-soft:#8B82C7;
+    --border:#3A2F66; --shadow:#000000; --chip-bg:#1B1430; --chip-border:#3A2F66;
+    --accent:#2EE6C5; --on-accent:#10241F; --accent-2:#FFDA14;
+    --nav-bg:rgba(27,20,48,0.9); --foot:#0A0712; --foot-ink:#F5F2FF; --foot-soft:#6E63A8;
+    --portrait:repeating-linear-gradient(45deg,#2A2347 0 10px,#221C3A 10px 20px);
+    --s-projects:#0B1238; --s-skills:#061A0F; --s-exp:#1C0C04; --s-research:#100420; --s-about:#041614;
+  }
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" style="font-family:'JetBrains Mono',monospace; color:var(--ink); background:var(--page);">
+
+  <!-- ============ NAV ============ -->
+  <div style="position:sticky; top:16px; z-index:50; padding:0 24px;">
+    <div style="max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:14px; background:var(--nav-bg); backdrop-filter:blur(10px); border:2px solid var(--border); border-radius:999px; padding:10px 12px 10px 22px; box-shadow:0 6px 0 var(--shadow);">
+      <a href="#home" style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; text-decoration:none; color:var(--ink); letter-spacing:-0.5px;">{{ brandName }}<span style="color:var(--accent);">{{ brandAccent }}</span></a>
+      <div style="display:flex; align-items:center; gap:4px;">
+        <a href="#games" style="text-decoration:none; color:var(--ink); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:8px 12px; border-radius:999px;" style-hover="background:var(--chip-bg);">Games</a>
+        <a href="#projects" style="text-decoration:none; color:var(--ink); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:8px 12px; border-radius:999px;" style-hover="background:var(--chip-bg);">Projects</a>
+        <a href="#experience" style="text-decoration:none; color:var(--ink); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:8px 12px; border-radius:999px;" style-hover="background:var(--chip-bg);">Experience</a>
+        <a href="#research" style="text-decoration:none; color:var(--ink); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:8px 12px; border-radius:999px;" style-hover="background:var(--chip-bg);">Research</a>
+        <a href="#about" style="text-decoration:none; color:var(--ink); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:8px 12px; border-radius:999px;" style-hover="background:var(--chip-bg);">About</a>
+        <button onClick="{{ onToggleTheme }}" title="Switch theme" style="cursor:pointer; display:inline-flex; align-items:center; gap:7px; background:var(--card); color:var(--ink); border:2px solid var(--border); border-radius:999px; padding:7px 13px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase;" style-hover="background:var(--chip-bg);"><span style="width:11px; height:11px; border-radius:50%; background:{{ themeSwatch }}; border:1.5px solid var(--border);"></span>{{ themeLabel }}</button>
+        <button onClick="{{ onMute }}" style="cursor:pointer; background:var(--card); color:var(--ink); border:2px solid var(--border); border-radius:999px; padding:7px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:800; letter-spacing:0.5px;" style-hover="background:var(--chip-bg);">{{ sfxLabel }}</button>
+        <a href="#contact" style="text-decoration:none; background:var(--accent); color:var(--on-accent); border:2px solid var(--border); border-radius:999px; padding:9px 18px; font-size:12px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase; box-shadow:0 4px 0 var(--shadow); transition:transform .08s, box-shadow .08s;" style-active="transform:translateY(4px); box-shadow:0 0 0 var(--shadow);">Hire Me</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section id="home" data-screen-label="Hero" style="scroll-margin-top:90px; background:var(--hero); padding:64px 24px 80px; position:relative; overflow:hidden;">
+    <div style="position:absolute; top:-120px; right:-80px; width:340px; height:340px; border-radius:50%; background:rgba(255,218,20,0.16); pointer-events:none;"></div>
+    <div style="position:absolute; bottom:-140px; left:-60px; width:300px; height:300px; border-radius:50%; background:rgba(255,255,255,0.07); pointer-events:none;"></div>
+    <div style="max-width:1180px; margin:0 auto; display:grid; grid-template-columns:1.05fr 0.95fr; gap:48px; align-items:center; position:relative;">
+      <div data-reveal>
+        <div style="font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.85);">{{ heroKicker }}</div>
+        <h1 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:74px; line-height:0.92; margin:14px 0 0; color:#fff; letter-spacing:-1.5px; text-shadow:0 5px 0 rgba(17,24,39,0.4);">{{ heroHeadline }}</h1>
+        <p style="max-width:520px; margin:22px 0 0; font-size:15px; line-height:1.75; color:rgba(255,255,255,0.92);">{{ heroSubhead }}</p>
+        <div style="display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;">
+          <a href="#games" style="text-decoration:none; background:#FFDA14; color:#111827; border:2px solid #111827; border-radius:999px; padding:14px 26px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 6px 0 #111827; transition:transform .08s, box-shadow .08s;" style-hover="background:#ffe24a;" style-active="transform:translateY(6px); box-shadow:0 0 0 #111827;">View Games</a>
+          <a href="#projects" style="text-decoration:none; background:#fff; color:#111827; border:2px solid #111827; border-radius:999px; padding:14px 26px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 6px 0 #111827; transition:transform .08s, box-shadow .08s;" style-hover="background:#f3f3f1;" style-active="transform:translateY(6px); box-shadow:0 0 0 #111827;">View Projects</a>
+        </div>
+      </div>
+      <!-- right · playable cabinet (theme-independent arcade screen) -->
+      <div data-reveal style="position:relative;">
+        <div style="background:#fff; border:2px solid #111827; border-radius:24px; padding:16px; box-shadow:0 12px 0 #111827;">
+          <div style="position:relative; height:340px; border:2px solid #111827; border-radius:14px; overflow:hidden; background:radial-gradient(rgba(255,255,255,0.07) 1.2px, transparent 1.6px) 0 0 / 13px 13px, linear-gradient(160deg,#1b1430,#0e0a1c);">
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 5px); pointer-events:none; z-index:6;"></div>
+            <sc-if value="{{ isPlaying }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; top:0; left:0; right:0; display:flex; justify-content:space-between; padding:12px 14px; z-index:7;">
+                <span style="background:#FFDA14; color:#111827; padding:5px 12px; border-radius:999px; font-size:12px; font-weight:800; letter-spacing:1px; border:2px solid #111827;">SCORE {{ score }}</span>
+                <span style="background:#fff; color:#111827; padding:5px 12px; border-radius:999px; font-size:12px; font-weight:800; letter-spacing:1px; border:2px solid #111827;">{{ timeLeft }}s</span>
+              </div>
+            </sc-if>
+            <sc-for list="{{ targets }}" as="t" hint-placeholder-count="0">
+              <button onClick="{{ t.onClick }}" style="position:absolute; left:{{ t.x }}; top:{{ t.y }}; width:{{ t.size }}px; height:{{ t.size }}px; border-radius:50%; background:{{ t.c }}; border:2px solid #111827; box-shadow:0 3px 0 #111827; cursor:pointer; z-index:7; padding:0; animation:pop .16s ease-out;"></button>
+            </sc-for>
+            <sc-if value="{{ isIdle }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; z-index:8;">
+                <span style="font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#9C8FD6;">Playable demo · {{ timeLeft }} seconds</span>
+                <button onClick="{{ onStart }}" style="cursor:pointer; background:#FFDA14; color:#111827; border:2px solid #111827; border-radius:999px; padding:16px 34px; font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; letter-spacing:0.5px; box-shadow:0 6px 0 #111827; transition:transform .08s, box-shadow .08s;" style-hover="background:#ffe24a;" style-active="transform:translateY(6px); box-shadow:0 0 0 #111827;">PRESS START</button>
+                <span style="font-size:12px; color:#7E73B8;">Tap the targets as fast as you can</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ isOver }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; z-index:8; background:rgba(14,10,28,0.72);">
+                <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:34px; color:#FFDA14;">GAME OVER</span>
+                <span style="font-size:13px; font-weight:700; letter-spacing:1px; color:#fff;">SCORE {{ score }} · BEST {{ best }}</span>
+                <button onClick="{{ onStart }}" style="margin-top:8px; cursor:pointer; background:#FFDA14; color:#111827; border:2px solid #111827; border-radius:999px; padding:12px 26px; font-family:'JetBrains Mono',monospace; font-weight:800; font-size:13px; letter-spacing:1px; text-transform:uppercase; box-shadow:0 5px 0 #111827; transition:transform .08s, box-shadow .08s;" style-active="transform:translateY(5px); box-shadow:0 0 0 #111827;">Play Again</button>
+              </div>
+            </sc-if>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 6px 4px;">
+            <span style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#8A8AA0;">▶ Arcade Demo · built in-engine</span>
+            <button onClick="{{ onMute }}" style="cursor:pointer; background:#fff; color:#111827; border:2px solid #111827; border-radius:999px; padding:6px 12px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:800;" style-hover="background:#FFDA14;">{{ sfxLabel }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section data-screen-label="Stats" style="background:var(--stat); border-top:2px solid var(--border); border-bottom:2px solid var(--border); padding:34px 24px;">
+    <div data-reveal style="max-width:1180px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+      <sc-for list="{{ stats }}" as="st" hint-placeholder-count="4">
+        <div style="text-align:center;"><div style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:54px; line-height:1; color:var(--stat-ink);">{{ st.value }}</div><div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-top:6px; color:var(--stat-label);">{{ st.label }}</div></div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED GAMES ============ -->
+  <section id="games" data-screen-label="Featured Games" style="scroll-margin-top:90px; background:var(--feature); padding:80px 24px;">
+    <div style="max-width:1180px; margin:0 auto;">
+      <div data-reveal style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:36px;">
+        <div>
+          <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">Top Titles</span>
+          <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:#fff; text-transform:uppercase; letter-spacing:0.5px; text-shadow:0 4px 0 rgba(17,24,39,0.35);">Featured Games</h2>
+        </div>
+        <a href="#games" style="text-decoration:none; background:var(--card); color:var(--card-ink); border:2px solid var(--border); border-radius:999px; padding:11px 22px; font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 5px 0 var(--shadow); cursor:pointer; transition:transform .08s, box-shadow .08s;" style-active="transform:translateY(5px); box-shadow:0 0 0 var(--shadow);">View All</a>
+      </div>
+      <div data-reveal style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+        <sc-for list="{{ games }}" as="g" hint-placeholder-count="6">
+          <div style="background:var(--card); border:2px solid var(--border); border-radius:14px; padding:12px; box-shadow:8px 8px 0 var(--shadow); transition:transform .12s, box-shadow .12s;" style-hover="transform:translate(-2px,-2px); box-shadow:10px 10px 0 var(--shadow);">
+            <div style="height:150px; border:2px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; background:{{ g.coverBg }};"><span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; letter-spacing:2px; color:{{ g.label }}; text-transform:uppercase;">{{ g.n }}</span></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 6px 6px;">
+              <div><h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; margin:0; text-transform:uppercase; color:var(--card-ink);">{{ g.title }}</h3><span style="font-size:12px; color:var(--card-soft);">{{ g.genre }}</span></div>
+              <button onClick="{{ g.onLaunch }}" title="View game" style="width:44px; height:44px; flex:none; border-radius:50%; background:{{ accent }}; border:2px solid #111827; display:flex; align-items:center; justify-content:center; font-size:15px; box-shadow:0 4px 0 #111827; cursor:pointer; padding:0; transition:transform .08s, box-shadow .08s;" style-hover="filter:brightness(1.05);" style-active="transform:translateY(4px); box-shadow:0 0 0 #111827;">▶</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED PROJECTS ============ -->
+  <section id="projects" data-screen-label="Featured Projects" style="scroll-margin-top:90px; background:var(--s-projects); padding:80px 24px; position:relative; overflow:hidden;">
+    <div style="max-width:1180px; margin:0 auto; position:relative;">
+      <div data-reveal style="margin-bottom:36px;">
+        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">Beyond the arcade</span>
+        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Featured Projects</h2>
+        <p style="max-width:640px; margin:12px 0 0; font-size:14px; line-height:1.7; color:rgba(255,255,255,0.9);">The same engineering applied beyond games &mdash; full-stack apps, APIs and AI tools. Tap any card to see what it does, what it&rsquo;s built with, and where to view it.</p>
+      </div>
+      <div data-reveal style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
+          <div style="background:var(--card); border:2px solid var(--border); border-radius:14px; padding:12px; box-shadow:8px 8px 0 var(--shadow); transition:transform .12s, box-shadow .12s;" style-hover="transform:translate(-2px,-2px); box-shadow:10px 10px 0 var(--shadow);">
+            <div style="position:relative; height:150px; border:2px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; background:{{ p.coverBg }};">
+              <span style="position:absolute; top:10px; left:10px; background:rgba(17,24,39,0.55); color:#fff; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 9px; border-radius:999px;">{{ p.tag }}</span>
+              <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; letter-spacing:2px; color:{{ p.label }}; text-transform:uppercase;">{{ p.n }}</span>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 6px 6px;">
+              <div><h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; margin:0; text-transform:uppercase; color:var(--card-ink);">{{ p.title }}</h3><span style="font-size:12px; color:var(--card-soft);">{{ p.genre }}</span></div>
+              <button onClick="{{ p.onLaunch }}" title="View project" style="width:44px; height:44px; flex:none; border-radius:50%; background:{{ accent }}; border:2px solid #111827; display:flex; align-items:center; justify-content:center; font-size:15px; box-shadow:0 4px 0 #111827; cursor:pointer; padding:0; transition:transform .08s, box-shadow .08s;" style-hover="filter:brightness(1.05);" style-active="transform:translateY(4px); box-shadow:0 0 0 #111827;">▶</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" data-screen-label="Skills" style="scroll-margin-top:90px; background:var(--s-skills); padding:80px 24px; position:relative; overflow:hidden;">
+    <div style="max-width:1180px; margin:0 auto; position:relative;">
+      <div data-reveal style="margin-bottom:34px;">
+        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">Tech Stack</span>
+        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Skills &amp; Tools</h2>
+      </div>
+      <div data-reveal style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+        <sc-for list="{{ skills }}" as="sk" hint-placeholder-count="4">
+          <div style="background:var(--card); border:2px solid var(--border); border-radius:18px; padding:22px; box-shadow:0 5px 0 var(--shadow);">
+            <h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; margin:0 0 14px; color:{{ sk.color }}; text-transform:uppercase;">{{ sk.title }}</h3>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <sc-for list="{{ sk.chips }}" as="c" hint-placeholder-count="4">
+                <span style="border:1.5px solid var(--chip-border); color:var(--card-ink); border-radius:999px; padding:6px 12px; font-size:12px; font-weight:600;">{{ c }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION & EXPERIENCE ============ -->
+  <section id="experience" data-screen-label="Experience" style="scroll-margin-top:90px; background:var(--s-exp); padding:80px 24px; position:relative; overflow:hidden;">
+    <div style="max-width:1180px; margin:0 auto; position:relative;">
+      <div data-reveal style="margin-bottom:34px;">
+        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">Background</span>
+        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Education &amp; Experience</h2>
+      </div>
+      <div data-reveal style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:24px;">
+        <!-- experience -->
+        <div>
+          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:14px;">Experience</div>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <sc-for list="{{ experience }}" as="ex" hint-placeholder-count="3">
+              <div style="background:var(--card); border:2px solid var(--border); border-radius:18px; padding:22px; box-shadow:0 5px 0 var(--shadow);">
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;"><span style="background:var(--chip-bg); border:1.5px solid var(--chip-border); border-radius:999px; padding:5px 12px; font-size:11px; font-weight:700; letter-spacing:0.5px; color:var(--card-ink);">{{ ex.period }}</span><span style="width:8px; height:8px; border-radius:50%; background:var(--accent);"></span></div>
+                <h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:21px; margin:12px 0 0; color:var(--card-ink);">{{ ex.title }}</h3>
+                <div style="font-size:12px; font-weight:700; letter-spacing:0.5px; color:var(--accent); margin-top:3px;">{{ ex.org }}</div>
+                <p style="font-size:13px; line-height:1.65; color:var(--card-soft); margin:10px 0 0;">{{ ex.desc }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <!-- education -->
+        <div>
+          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:14px;">Education</div>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <sc-for list="{{ education }}" as="ed" hint-placeholder-count="2">
+              <div style="background:var(--card); border:2px solid var(--border); border-radius:18px; padding:22px; box-shadow:0 5px 0 var(--shadow);">
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;"><span style="background:var(--chip-bg); border:1.5px solid var(--chip-border); border-radius:999px; padding:5px 12px; font-size:11px; font-weight:700; letter-spacing:0.5px; color:var(--card-ink);">{{ ed.period }}</span><span style="width:8px; height:8px; border-radius:50%; background:var(--accent-2);"></span></div>
+                <h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:21px; margin:12px 0 0; color:var(--card-ink);">{{ ed.title }}</h3>
+                <div style="font-size:12px; font-weight:700; letter-spacing:0.5px; color:var(--accent); margin-top:3px;">{{ ed.org }}</div>
+                <p style="font-size:13px; line-height:1.65; color:var(--card-soft); margin:10px 0 0;">{{ ed.desc }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH ============ -->
+  <section id="research" data-screen-label="Research" style="scroll-margin-top:90px; background:var(--s-research); padding:80px 24px; position:relative; overflow:hidden;">
+    <div style="max-width:1180px; margin:0 auto; position:relative;">
+      <div data-reveal style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:34px;">
+        <div>
+          <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">Research</span>
+          <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Published Papers</h2>
+        </div>
+        <a href="https://scholar.google.com" target="_blank" rel="noopener" style="text-decoration:none; background:var(--accent); color:var(--on-accent); border:2px solid var(--border); border-radius:999px; padding:11px 22px; font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 5px 0 var(--shadow); transition:transform .08s, box-shadow .08s;" style-active="transform:translateY(5px); box-shadow:0 0 0 var(--shadow);">Google Scholar</a>
+      </div>
+      <div data-reveal style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+        <sc-for list="{{ research }}" as="r" hint-placeholder-count="3">
+          <a href="{{ r.href }}" target="_blank" rel="noopener" style="text-decoration:none; display:block; background:var(--card); border:2px solid var(--border); border-radius:18px; padding:24px; box-shadow:0 6px 0 var(--shadow); transition:transform .12s;" style-hover="transform:translateY(-4px);"><span style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent);">{{ r.venue }}</span><h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:21px; line-height:1.25; margin:12px 0 0; color:var(--card-ink);">{{ r.title }}</h3><p style="font-size:13px; line-height:1.6; color:var(--card-soft); margin:12px 0 16px;">{{ r.desc }}</p><span style="font-size:12px; font-weight:700; color:var(--accent);">Read paper →</span></a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" data-screen-label="About" style="scroll-margin-top:90px; background:var(--s-about); padding:80px 24px; position:relative; overflow:hidden;">
+    <div style="max-width:1180px; margin:0 auto; display:grid; grid-template-columns:0.8fr 1.2fr; gap:44px; align-items:center; position:relative;">
+      <div data-reveal style="position:relative;">
+        <div style="aspect-ratio:1/1; border:2px solid var(--border); border-radius:24px; background:var(--portrait); display:flex; align-items:center; justify-content:center; box-shadow:0 10px 0 var(--accent);"><span style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--card-soft);">[ portrait ]</span></div>
+      </div>
+      <div data-reveal>
+        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">About</span>
+        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:44px; margin:8px 0 0; color:#fff; letter-spacing:-0.5px;">{{ aboutHeading }}</h2>
+        <p style="max-width:560px; margin:18px 0 0; font-size:15px; line-height:1.75; color:rgba(255,255,255,0.9);">{{ aboutBio }}</p>
+        <div style="margin-top:24px;">
+          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:12px;">{{ aboutLookingTitle }}</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <sc-for list="{{ aboutLooking }}" as="lf" hint-placeholder-count="3">
+              <div style="display:flex; align-items:center; gap:10px; color:#fff; font-size:14px;"><span style="width:8px; height:8px; border-radius:50%; background:{{ lf.dot }};"></span>{{ lf.text }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" data-screen-label="Contact" style="scroll-margin-top:90px; background:var(--hero); padding:90px 24px; position:relative; overflow:hidden;">
+    <div style="position:absolute; top:-100px; left:-60px; width:300px; height:300px; border-radius:50%; background:rgba(255,218,20,0.14); pointer-events:none;"></div>
+    <div data-reveal style="max-width:760px; margin:0 auto; text-align:center; position:relative;">
+      <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.85);">{{ contactKicker }}</span>
+      <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:60px; line-height:0.96; margin:12px 0 0; color:#fff; letter-spacing:-1px; text-shadow:0 5px 0 rgba(17,24,39,0.4);">{{ contactHeading }}</h2>
+      <p style="margin:20px auto 0; max-width:520px; font-size:15px; line-height:1.7; color:rgba(255,255,255,0.92);">{{ contactBlurb }}</p>
+      <div style="display:flex; gap:14px; justify-content:center; margin-top:32px; flex-wrap:wrap;">
+        <a href="{{ emailHref }}" style="text-decoration:none; background:#FFDA14; color:#111827; border:2px solid #111827; border-radius:999px; padding:15px 30px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 6px 0 #111827; transition:transform .08s, box-shadow .08s;" style-active="transform:translateY(6px); box-shadow:0 0 0 #111827;">Get in touch</a>
+        <a href="{{ resumeHref }}" style="text-decoration:none; background:#fff; color:#111827; border:2px solid #111827; border-radius:999px; padding:15px 30px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 6px 0 #111827; transition:transform .08s, box-shadow .08s;" style-active="transform:translateY(6px); box-shadow:0 0 0 #111827;">Resume</a>
+      </div>
+      <div style="display:flex; gap:10px; justify-content:center; margin-top:24px; flex-wrap:wrap;">
+        <sc-for list="{{ contactLinks }}" as="cl" hint-placeholder-count="3">
+          <a href="{{ cl.href }}" target="_blank" rel="noopener" style="text-decoration:none; color:#fff; border:2px solid rgba(255,255,255,0.5); border-radius:999px; padding:8px 18px; font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase;" style-hover="border-color:#fff;">{{ cl.label }}</a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:var(--foot); color:var(--foot-ink); padding:36px 24px;">
+    <div style="max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <div><div style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px;">{{ footName }}</div><div style="font-size:12px; color:var(--foot-soft); letter-spacing:1px; text-transform:uppercase; margin-top:2px;">{{ footTagline }}</div></div>
+      <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+        <a href="Admin.dc.html" style="text-decoration:none; color:var(--foot-soft); font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; border:1.5px solid var(--foot-soft); border-radius:999px; padding:7px 14px;" style-hover="color:var(--foot-ink); border-color:var(--foot-ink);">Edit site →</a>
+        <div style="font-size:12px; color:var(--foot-soft);">{{ footCopyright }}</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ INFO MODAL (games + projects) ============ -->
+  <sc-if value="{{ launched }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; inset:0; z-index:100; background:rgba(14,10,28,0.8); display:flex; align-items:flex-start; justify-content:center; padding:40px 24px; overflow:auto;">
+      <div style="width:100%; max-width:680px; background:var(--card); border:2px solid var(--border); border-radius:22px; overflow:hidden; box-shadow:0 16px 0 rgba(0,0,0,0.4);">
+        <!-- slideshow -->
+        <div style="position:relative; height:320px; border-bottom:2px solid var(--border); overflow:hidden;">
+          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:radial-gradient(rgba(255,255,255,0.16) 1.2px, transparent 1.6px) 0 0 / 13px 13px, {{ slideBg }}; transition:background .25s ease;">
+            <div style="text-align:center; padding:0 24px;">
+              <div style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:32px; color:rgba(255,255,255,0.72); text-transform:uppercase; letter-spacing:1px;">{{ slideLabel }}</div>
+              <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-top:8px;">screenshot placeholder · {{ slideIndex }} / {{ slideCount }}</div>
+            </div>
+          </div>
+          <button onClick="{{ onPrev }}" title="Previous" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); width:42px; height:42px; border-radius:50%; background:#fff; border:2px solid #111827; cursor:pointer; font-size:20px; font-weight:800; line-height:1; color:#111827; box-shadow:0 4px 0 #111827; display:flex; align-items:center; justify-content:center; z-index:4; padding:0;" style-active="box-shadow:0 0 0 #111827;">‹</button>
+          <button onClick="{{ onNext }}" title="Next" style="position:absolute; right:14px; top:50%; transform:translateY(-50%); width:42px; height:42px; border-radius:50%; background:#fff; border:2px solid #111827; cursor:pointer; font-size:20px; font-weight:800; line-height:1; color:#111827; box-shadow:0 4px 0 #111827; display:flex; align-items:center; justify-content:center; z-index:4; padding:0;" style-active="box-shadow:0 0 0 #111827;">›</button>
+          <button onClick="{{ onClose }}" title="Close" style="position:absolute; top:14px; right:14px; width:40px; height:40px; border-radius:50%; background:#fff; border:2px solid #111827; cursor:pointer; font-size:15px; font-weight:800; color:#111827; box-shadow:0 4px 0 #111827; z-index:4; padding:0; transition:transform .08s, box-shadow .08s;" style-hover="background:#FF5E5E; color:#fff;" style-active="transform:translateY(4px); box-shadow:0 0 0 #111827;">✕</button>
+          <div style="position:absolute; bottom:14px; left:0; right:0; display:flex; gap:8px; justify-content:center; z-index:4;">
+            <sc-for list="{{ dots }}" as="d" hint-placeholder-count="3">
+              <button onClick="{{ d.onClick }}" style="width:11px; height:11px; border-radius:50%; background:{{ d.bg }}; border:2px solid #111827; cursor:pointer; padding:0;"></button>
+            </sc-for>
+          </div>
+        </div>
+        <!-- content -->
+        <div style="padding:26px;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+            <div>
+              <h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:30px; margin:0; text-transform:uppercase; letter-spacing:0.5px; color:var(--card-ink);">{{ selTitle }}</h3>
+              <span style="font-size:13px; color:var(--card-soft);">{{ selGenre }}</span>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <span style="border:2px solid var(--border); color:var(--card-ink); border-radius:999px; padding:6px 13px; font-size:11px; font-weight:700; letter-spacing:0.5px;">{{ selRole }}</span>
+              <span style="border:2px solid var(--border); color:var(--card-ink); border-radius:999px; padding:6px 13px; font-size:11px; font-weight:700; letter-spacing:0.5px;">{{ selEngine }}</span>
+              <span style="border:2px solid var(--border); color:var(--card-ink); border-radius:999px; padding:6px 13px; font-size:11px; font-weight:700; letter-spacing:0.5px;">{{ selYear }}</span>
+            </div>
+          </div>
+          <p style="margin:18px 0 0; font-size:14px; line-height:1.75; color:var(--soft);">{{ selDesc }}</p>
+          <div style="font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--card-soft); margin:22px 0 10px;">Built with</div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <sc-for list="{{ selTech }}" as="tech" hint-placeholder-count="4">
+              <span style="background:var(--chip-bg); border:1.5px solid var(--chip-border); border-radius:999px; padding:6px 13px; font-size:12px; font-weight:600; color:var(--card-ink);">{{ tech }}</span>
+            </sc-for>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:26px; flex-wrap:wrap;">
+            <a href="{{ selPrimaryHref }}" target="_blank" rel="noopener" style="text-decoration:none; background:{{ accent }}; color:#111827; border:2px solid #111827; border-radius:999px; padding:14px 28px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 5px 0 #111827; transition:transform .08s, box-shadow .08s;" style-active="transform:translateY(5px); box-shadow:0 0 0 #111827;">{{ selPrimaryLabel }}</a>
+            <a href="{{ selRepo }}" target="_blank" rel="noopener" style="text-decoration:none; background:var(--card); color:var(--card-ink); border:2px solid var(--border); border-radius:999px; padding:14px 28px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 5px 0 var(--shadow); transition:transform .08s, box-shadow .08s;" style-hover="background:var(--chip-bg);" style-active="transform:translateY(5px); box-shadow:0 0 0 var(--shadow);">GitHub Repo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:980},&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;coral&quot;,&quot;options&quot;:[&quot;coral&quot;,&quot;midnight&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;playButtonColor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;#FFDA14&quot;,&quot;options&quot;:[&quot;#FFDA14&quot;,&quot;#4502FF&quot;,&quot;#FF5E5E&quot;,&quot;#2EE6C5&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;gameSeconds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:15,&quot;min&quot;:5,&quot;max&quot;:30,&quot;tsType&quot;:&quot;number&quot;},&quot;muteByDefault&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = {
+    data: (typeof window !== 'undefined' && window.PortfolioStore) ? window.PortfolioStore.load() : null,
+    theme: (this.props && this.props.defaultTheme) || 'coral',
+    phase: 'idle',
+    score: 0,
+    best: 0,
+    timeLeft: (this.props && this.props.gameSeconds) || 15,
+    targets: [],
+    muted: !!(this.props && this.props.muteByDefault),
+    launched: false,
+    selected: null,
+    slide: 0,
+  };
+  _nid = 0;
+
+  componentDidMount() {
+    this._ensureData();
+    this._onStorage = (e) => {
+      if (!e || e.key === null || e.key === (window.PortfolioStore && window.PortfolioStore.KEY)) {
+        if (window.PortfolioStore) this.setState({ data: window.PortfolioStore.load() });
+      }
+    };
+    window.addEventListener('storage', this._onStorage);
+    this._reveal();
+  }
+
+  _ensureData(tries) {
+    if (this.state.data) return;
+    if (window.PortfolioStore) { this.setState({ data: window.PortfolioStore.load() }); return; }
+    if ((tries || 0) > 40) return;
+    setTimeout(() => this._ensureData((tries || 0) + 1), 50);
+  }
+
+  _reveal() {
+    try {
+      const els = Array.from(document.querySelectorAll('[data-reveal]'));
+      els.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(28px)';
+        el.style.transition = 'opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)';
+      });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'none';
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      els.forEach(el => io.observe(el));
+      this._io = io;
+    } catch (e) {}
+  }
+
+  componentWillUnmount() {
+    this._stop();
+    if (this._io) this._io.disconnect();
+    if (this._onStorage) window.removeEventListener('storage', this._onStorage);
+  }
+
+  _dur() { return (this.props && this.props.gameSeconds) || 15; }
+
+  toggleTheme() {
+    this.setState(s => ({ theme: s.theme === 'coral' ? 'midnight' : 'coral' }));
+    this._beep(700, 0.06);
+  }
+
+  _ctx() {
+    if (this.state.muted) return null;
+    try {
+      this._ac = this._ac || new (window.AudioContext || window.webkitAudioContext)();
+      return this._ac;
+    } catch (e) { return null; }
+  }
+
+  _beep(freq, dur) {
+    const ac = this._ctx();
+    if (!ac) return;
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+    o.type = 'square';
+    o.frequency.value = freq;
+    o.connect(g); g.connect(ac.destination);
+    const t = ac.currentTime;
+    g.gain.setValueAtTime(0.06, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + (dur || 0.12));
+    o.start(t);
+    o.stop(t + (dur || 0.12));
+  }
+
+  launch(kind, i) {
+    const d = this.state.data;
+    if (!d) return;
+    const src = kind === 'project' ? d.projects : d.games;
+    const item = (src && src[i]) || null;
+    this.setState({ launched: true, selected: item ? { ...item, kind } : null, slide: 0 });
+    this._beep(520, 0.08);
+  }
+
+  close() { this.setState({ launched: false }); }
+
+  nextSlide() {
+    const n = (this.state.selected && this.state.selected.slides.length) || 1;
+    this.setState(s => ({ slide: (s.slide + 1) % n }));
+    this._beep(620, 0.05);
+  }
+
+  prevSlide() {
+    const n = (this.state.selected && this.state.selected.slides.length) || 1;
+    this.setState(s => ({ slide: (s.slide - 1 + n) % n }));
+    this._beep(620, 0.05);
+  }
+
+  goSlide(i) { this.setState({ slide: i }); }
+
+  start() {
+    this._stop();
+    this.setState({ phase: 'playing', score: 0, timeLeft: this._dur(), targets: [] });
+    this._beep(660, 0.1);
+    this._tick = setInterval(() => {
+      this.setState(s => ({ timeLeft: Math.max(0, s.timeLeft - 1) }), () => {
+        if (this.state.timeLeft <= 0 && this.state.phase === 'playing') this._end();
+      });
+    }, 1000);
+    this._spawn = setInterval(() => this._addTarget(), 720);
+    this._addTarget();
+  }
+
+  _addTarget() {
+    const id = ++this._nid;
+    const colors = ['#FFDA14', '#4502FF', '#FF5E5E', '#2EE6C5', '#FF4E8E'];
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    const x = (8 + Math.random() * 76).toFixed(1) + '%';
+    const y = (14 + Math.random() * 62).toFixed(1) + '%';
+    const size = Math.random() < 0.3 ? 36 : 48;
+    this.setState(s => ({ targets: [...s.targets, { id, x, y, c, size }] }));
+    setTimeout(() => {
+      this.setState(s => ({ targets: s.targets.filter(t => t.id !== id) }));
+    }, 1150);
+  }
+
+  hit(id) {
+    this.setState(s => ({ targets: s.targets.filter(t => t.id !== id), score: s.score + 1 }));
+    this._beep(880 + Math.random() * 240, 0.08);
+  }
+
+  _end() {
+    this._stop();
+    this.setState(s => ({ phase: 'over', best: Math.max(s.best, s.score), targets: [] }));
+    this._beep(320, 0.25);
+  }
+
+  _stop() {
+    clearInterval(this._tick);
+    clearInterval(this._spawn);
+  }
+
+  toggleMute() { this.setState(s => ({ muted: !s.muted })); }
+
+  renderVals() {
+    const s = this.state;
+    const store = (typeof window !== 'undefined' && window.PortfolioStore) || null;
+    const d = s.data || {};
+    const accent = (this.props && this.props.playButtonColor) || '#FFDA14';
+    const g = s.selected;
+    const isProject = !!(g && g.kind === 'project');
+    const slides = (g && g.slides) || [];
+    const cur = slides[s.slide] || null;
+    const coverBg = (key) => store ? store.coverBg(key) : 'linear-gradient(160deg,#1b1430,#0e0a1c)';
+    const coverInk = (key) => store ? store.coverInk(key) : 'rgba(255,255,255,0.5)';
+    const grad = (key) => store ? store.grad(key) : 'linear-gradient(160deg,#1b1430,#0e0a1c)';
+
+    const brand = d.brand || {};
+    const hero = d.hero || {};
+    const about = d.about || {};
+    const contact = d.contact || {};
+    const footer = d.footer || {};
+    const baseLinks = (contact.links || []).slice();
+    if (contact.email) baseLinks.push({ label: 'Email', href: 'mailto:' + contact.email });
+
+    return {
+      theme: s.theme,
+      themeLabel: s.theme === 'coral' ? 'Midnight' : 'Coral',
+      themeSwatch: s.theme === 'coral' ? '#2EE6C5' : '#FF5E5E',
+      onToggleTheme: () => this.toggleTheme(),
+      isIdle: s.phase === 'idle',
+      isPlaying: s.phase === 'playing',
+      isOver: s.phase === 'over',
+      score: s.score,
+      best: s.best,
+      timeLeft: s.timeLeft,
+      muted: s.muted,
+      sfxLabel: s.muted ? 'SFX OFF' : 'SFX ON',
+      accent: accent,
+
+      brandName: brand.name || 'Ramiro',
+      brandAccent: brand.accentWord || '.dev',
+      heroKicker: hero.kicker || '',
+      heroHeadline: hero.headline || '',
+      heroSubhead: hero.subhead || '',
+
+      stats: (d.stats || []).map(x => ({ value: x.value, label: x.label })),
+      skills: (d.skills || []).map(x => ({ title: x.title, color: x.color, chips: x.chips || [] })),
+      experience: (d.experience || []).map(x => ({ period: x.period, title: x.title, org: x.org, desc: x.desc })),
+      education: (d.education || []).map(x => ({ period: x.period, title: x.title, org: x.org, desc: x.desc })),
+      research: (d.research || []).map(x => ({ venue: x.venue, title: x.title, desc: x.desc, href: x.href || '#' })),
+
+      aboutHeading: about.heading || '',
+      aboutBio: about.bio || '',
+      aboutLookingTitle: about.lookingForTitle || '',
+      aboutLooking: (about.lookingFor || []).map(x => ({ dot: x.dot, text: x.text })),
+
+      contactKicker: contact.kicker || '',
+      contactHeading: contact.heading || '',
+      contactBlurb: contact.blurb || '',
+      emailHref: contact.email ? ('mailto:' + contact.email) : '#',
+      resumeHref: contact.resumeHref || '#',
+      contactLinks: baseLinks,
+
+      footName: footer.name || '',
+      footTagline: footer.tagline || '',
+      footCopyright: footer.copyright || '',
+
+      launched: s.launched,
+      selTitle: g ? g.title : '',
+      selGenre: g ? g.genre : '',
+      selDesc: g ? g.desc : '',
+      selRole: g ? g.role : '',
+      selEngine: g ? g.engine : '',
+      selYear: g ? g.year : '',
+      selRepo: g ? (g.repo || '#') : '#',
+      selPrimaryLabel: isProject ? '↗ View Project' : '▶ Play the game',
+      selPrimaryHref: g ? (g.link || '#') : '#',
+      selTech: g ? (g.tech || []) : [],
+      slideBg: cur ? grad(cur.grad) : 'linear-gradient(160deg,#1b1430,#0e0a1c)',
+      slideLabel: cur ? cur.label : '',
+      slideIndex: s.slide + 1,
+      slideCount: slides.length,
+      dots: slides.map((sl, i) => ({ bg: i === s.slide ? accent : 'rgba(17,24,39,0.18)', onClick: () => this.goSlide(i) })),
+      onPrev: () => this.prevSlide(),
+      onNext: () => this.nextSlide(),
+      onStart: () => this.start(),
+      onMute: () => this.toggleMute(),
+      onClose: () => this.close(),
+      targets: s.targets.map(t => ({ ...t, onClick: () => this.hit(t.id) })),
+      games: (d.games || []).map((it, i) => ({
+        title: it.title, genre: it.genre, n: it.n,
+        label: coverInk(it.cover), coverBg: coverBg(it.cover),
+        onLaunch: () => this.launch('game', i),
+      })),
+      projects: (d.projects || []).map((it, i) => ({
+        title: it.title, genre: it.genre, tag: it.tag, n: it.n,
+        label: coverInk(it.cover), coverBg: coverBg(it.cover),
+        onLaunch: () => this.launch('project', i),
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

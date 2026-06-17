@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="./portfolio-data.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding: 0; background: #07080F; }
+    ::selection { background: #FFDA14; color: #111827; }
+  </style>
+</helmet>
+
+<div style="font-family:'JetBrains Mono',monospace; color:#EEF0FF; background:#07080F; min-height:100vh;">
+
+  <!-- NAV -->
+  <div style="position:sticky; top:16px; z-index:50; padding:0 24px;">
+    <div style="max-width:1240px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:14px; background:rgba(10,12,24,0.93); backdrop-filter:blur(14px); border:1.5px solid #232844; border-radius:999px; padding:10px 12px 10px 22px; box-shadow:0 4px 0 rgba(0,0,0,0.7);">
+      <a href="Landing Page.dc.html" style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; text-decoration:none; color:#EEF0FF; letter-spacing:-0.5px;">Ramiro<span style="color:#FF5E5E;">.dev</span></a>
+      <div style="display:flex; align-items:center; gap:4px;">
+        <a href="Landing Page.dc.html" style="text-decoration:none; color:#4A5C7A; font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:8px 14px; border-radius:999px;" style-hover="color:#EEF0FF; background:rgba(255,255,255,0.05);">← Portfolio</a>
+        <span style="color:#EEF0FF; font-size:12px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase; padding:8px 14px; border-radius:999px; background:rgba(255,94,94,0.18); border:1.5px solid rgba(255,94,94,0.4);">Games</span>
+        <a href="Projects.dc.html" style="text-decoration:none; color:#4A5C7A; font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:8px 14px; border-radius:999px;" style-hover="color:#EEF0FF; background:rgba(255,255,255,0.05);">Projects</a>
+        <a href="Landing Page.dc.html#experience" style="text-decoration:none; color:#4A5C7A; font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:8px 14px; border-radius:999px;" style-hover="color:#EEF0FF; background:rgba(255,255,255,0.05);">Experience</a>
+        <a href="Landing Page.dc.html#contact" style="text-decoration:none; background:#FF5E5E; color:#fff; border:2px solid #111827; border-radius:999px; padding:9px 18px; font-size:12px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase; box-shadow:0 4px 0 rgba(0,0,0,0.6); transition:transform .08s,box-shadow .08s;" style-active="transform:translateY(4px); box-shadow:0 0 0 rgba(0,0,0,0.6);">Hire Me</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED HERO -->
+  <section id="featured" style="background:#0B0E1C; padding:44px 24px 60px; border-bottom:1px solid #171B30;">
+    <div style="max-width:1240px; margin:0 auto;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:28px;">
+        <span style="width:8px; height:8px; border-radius:50%; background:#FF5E5E; box-shadow:0 0 10px rgba(255,94,94,0.7);"></span>
+        <span style="font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#3A4A6A;">Now Featuring</span>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1.15fr 0.95fr; gap:48px; align-items:start;">
+
+        <!-- LEFT: screenshot carousel -->
+        <div>
+          <div style="position:relative; aspect-ratio:16/9; border-radius:12px; overflow:hidden; border:2px solid #232844; box-shadow:0 14px 0 rgba(0,0,0,0.65); background:{{ heroGradient }};">
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(0,0,0,0.07) 0 2px,transparent 2px 5px); pointer-events:none; z-index:2;"></div>
+            <div style="position:absolute; bottom:14px; left:14px; z-index:3;">
+              <span style="background:rgba(0,0,0,0.7); color:#EEF0FF; font-size:11px; font-weight:700; letter-spacing:1px; padding:5px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.1);">{{ heroSlideLabel }}</span>
+            </div>
+            <div style="position:absolute; top:50%; left:14px; transform:translateY(-50%); z-index:3;">
+              <button onClick="{{ onPrev }}" style="width:42px; height:42px; border-radius:50%; background:rgba(0,0,0,0.65); border:1.5px solid rgba(255,255,255,0.15); color:#EEF0FF; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; transition:background .12s;" style-hover="background:rgba(255,94,94,0.8); border-color:#FF5E5E;">‹</button>
+            </div>
+            <div style="position:absolute; top:50%; right:14px; transform:translateY(-50%); z-index:3;">
+              <button onClick="{{ onNext }}" style="width:42px; height:42px; border-radius:50%; background:rgba(0,0,0,0.65); border:1.5px solid rgba(255,255,255,0.15); color:#EEF0FF; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; transition:background .12s;" style-hover="background:rgba(255,94,94,0.8); border-color:#FF5E5E;">›</button>
+            </div>
+            <div style="position:absolute; bottom:14px; right:14px; display:flex; gap:6px; z-index:3;">
+              <sc-for list="{{ heroDots }}" as="dot" hint-placeholder-count="3">
+                <button onClick="{{ dot.onClick }}" style="width:9px; height:9px; border-radius:50%; background:{{ dot.bg }}; border:1px solid rgba(255,255,255,0.2); cursor:pointer; padding:0; transition:background .15s;"></button>
+              </sc-for>
+            </div>
+          </div>
+          <!-- Thumbnails -->
+          <div style="display:flex; gap:8px; margin-top:10px;">
+            <sc-for list="{{ heroThumbs }}" as="th" hint-placeholder-count="3">
+              <button onClick="{{ th.onClick }}" title="{{ th.label }}" style="flex:1; aspect-ratio:16/9; border-radius:7px; overflow:hidden; border:{{ th.borderStyle }}; background:{{ th.bg }}; cursor:pointer; padding:0; position:relative; transition:border .15s;">
+                <div style="position:absolute; inset:0; background:{{ th.overlay }}; transition:background .15s;"></div>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- RIGHT: game info -->
+        <div style="padding-top:8px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;">
+            <span style="background:#111426; border:1.5px solid #232844; border-radius:999px; padding:5px 13px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#5060A0;">{{ heroEngine }}</span>
+            <span style="background:#111426; border:1.5px solid #232844; border-radius:999px; padding:5px 13px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#5060A0;">{{ heroYear }}</span>
+            <span style="background:rgba(255,218,20,0.1); border:1.5px solid rgba(255,218,20,0.3); border-radius:999px; padding:5px 13px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#FFDA14;">{{ heroRole }}</span>
+          </div>
+          <h1 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:58px; line-height:0.9; margin:0; color:#EEF0FF; letter-spacing:-0.5px; text-shadow:0 5px 0 rgba(0,0,0,0.5);">{{ heroTitle }}</h1>
+          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#FF5E5E; margin-top:14px;">{{ heroGenre }}</div>
+          <p style="font-size:14px; line-height:1.82; color:#6878A0; margin:16px 0 0; max-width:460px;">{{ heroDesc }}</p>
+          <div style="margin-top:24px;">
+            <div style="font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#2A3450; margin-bottom:10px;">Built With</div>
+            <div style="display:flex; flex-wrap:wrap; gap:7px;">
+              <sc-for list="{{ heroTech }}" as="tech" hint-placeholder-count="4">
+                <span style="background:#0A0C1A; border:1.5px solid #1E2240; border-radius:999px; padding:6px 13px; font-size:12px; font-weight:600; color:#8898C0;">{{ tech }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:32px; flex-wrap:wrap;">
+            <a href="{{ heroLink }}" target="_blank" rel="noopener" style="text-decoration:none; background:#FF5E5E; color:#fff; border:2px solid #111827; border-radius:999px; padding:14px 30px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 5px 0 rgba(0,0,0,0.7); transition:transform .08s,box-shadow .08s;" style-active="transform:translateY(5px); box-shadow:0 0 0 rgba(0,0,0,0.7);">▶ Play Now</a>
+            <a href="{{ heroRepo }}" target="_blank" rel="noopener" style="text-decoration:none; background:#141726; color:#EEF0FF; border:2px solid #252A46; border-radius:999px; padding:14px 30px; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 5px 0 rgba(0,0,0,0.5); transition:transform .08s,box-shadow .08s;" style-hover="background:#1C1E38;" style-active="transform:translateY(5px); box-shadow:0 0 0 rgba(0,0,0,0.5);">GitHub Repo</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ALL GAMES -->
+  <section id="all-games" style="padding:64px 24px 80px; background:#07080F;">
+    <div style="max-width:1240px; margin:0 auto;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px;">
+        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:40px; margin:0; color:#EEF0FF; text-transform:uppercase; letter-spacing:0.5px;">All Games</h2>
+        <span style="font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#2A3450;">{{ gameCount }} Titles</span>
+      </div>
+      <!-- Tag filters -->
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:36px;">
+        <sc-for list="{{ tagItems }}" as="tag" hint-placeholder-count="8">
+          <button onClick="{{ tag.onClick }}" style="cursor:pointer; background:{{ tag.bg }}; color:{{ tag.color }}; border:1.5px solid {{ tag.borderColor }}; border-radius:999px; padding:9px 18px; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; transition:all .12s;">{{ tag.label }}</button>
+        </sc-for>
+      </div>
+      <!-- Game grid -->
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+        <sc-for list="{{ displayGames }}" as="g" hint-placeholder-count="6">
+          <div onClick="{{ g.onClick }}" style="cursor:pointer; background:#0F1222; border:{{ g.borderStyle }}; border-radius:14px; overflow:hidden; box-shadow:{{ g.shadowStyle }}; transition:transform .14s,box-shadow .14s;" style-hover="transform:translateY(-4px); box-shadow:0 12px 0 rgba(0,0,0,0.6);">
+            <div style="position:relative; height:158px; background:{{ g.coverBg }}; display:flex; align-items:center; justify-content:center;">
+              <div style="position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(0,0,0,0.07) 0 2px,transparent 2px 5px); pointer-events:none;"></div>
+              <sc-if value="{{ g.isFeatured }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:10px; left:10px; background:#FFDA14; color:#111827; font-size:9px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:999px; border:1.5px solid #111827; z-index:2;">▶ NOW PLAYING</div>
+              </sc-if>
+              <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:20px; letter-spacing:2px; color:{{ g.coverLabel }}; text-transform:uppercase; z-index:1; position:relative;">{{ g.n }}</span>
+            </div>
+            <div style="padding:14px 16px 16px;">
+              <h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; margin:0 0 3px; color:#EEF0FF; text-transform:uppercase; letter-spacing:0.5px;">{{ g.title }}</h3>
+              <div style="font-size:11px; color:#2E3C58; margin-bottom:12px; letter-spacing:0.5px;">{{ g.genre }}</div>
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <span style="font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#222C44;">{{ g.engine }} · {{ g.year }}</span>
+                <div style="width:32px; height:32px; border-radius:50%; background:rgba(255,94,94,0.1); border:1.5px solid rgba(255,94,94,0.28); color:#FF5E5E; font-size:12px; display:flex; align-items:center; justify-content:center;">▶</div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#030407; padding:32px 24px; border-top:1px solid #12162A;">
+    <div style="max-width:1240px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <div>
+        <div style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:20px; color:#EEF0FF;">Ramiro Santos</div>
+        <div style="font-size:11px; color:#222C44; letter-spacing:1px; text-transform:uppercase; margin-top:3px;">Solo Game Developer</div>
+      </div>
+      <div style="display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+        <a href="Landing Page.dc.html" style="text-decoration:none; color:#2A3450; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;" style-hover="color:#EEF0FF;">Portfolio</a>
+        <a href="Projects.dc.html" style="text-decoration:none; color:#2A3450; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;" style-hover="color:#EEF0FF;">Projects</a>
+        <a href="Landing Page.dc.html#contact" style="text-decoration:none; color:#2A3450; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;" style-hover="color:#EEF0FF;">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { data: null, featuredIdx: 0, heroSlide: 0, activeTag: 'All' };
+
+  componentDidMount() {
+    this._ensureData();
+    this._onStorage = () => {
+      if (window.PortfolioStore) this.setState({ data: window.PortfolioStore.load() });
+    };
+    window.addEventListener('storage', this._onStorage);
+  }
+
+  componentWillUnmount() {
+    if (this._onStorage) window.removeEventListener('storage', this._onStorage);
+  }
+
+  _ensureData(tries) {
+    if (this.state.data) return;
+    if (window.PortfolioStore) { this.setState({ data: window.PortfolioStore.load() }); return; }
+    if ((tries || 0) > 40) return;
+    setTimeout(() => this._ensureData((tries || 0) + 1), 50);
+  }
+
+  prevSlide() {
+    const hero = ((this.state.data && this.state.data.games) || [])[this.state.featuredIdx] || {};
+    const n = (hero.slides || []).length || 1;
+    this.setState(s => ({ heroSlide: (s.heroSlide - 1 + n) % n }));
+  }
+
+  nextSlide() {
+    const hero = ((this.state.data && this.state.data.games) || [])[this.state.featuredIdx] || {};
+    const n = (hero.slides || []).length || 1;
+    this.setState(s => ({ heroSlide: (s.heroSlide + 1) % n }));
+  }
+
+  goSlide(i) { this.setState({ heroSlide: i }); }
+  setTag(t) { this.setState({ activeTag: t }); }
+  setFeatured(i) { this.setState({ featuredIdx: i, heroSlide: 0 }); }
+
+  renderVals() {
+    const { data, featuredIdx, heroSlide, activeTag } = this.state;
+    const store = window.PortfolioStore || null;
+    const games = (data && data.games) || [];
+    const hero = games[featuredIdx] || games[0] || {};
+    const slides = hero.slides || [];
+    const cur = slides[heroSlide] || slides[0] || {};
+
+    const grad = k => store ? store.grad(k) : 'linear-gradient(160deg,#1b1430,#0e0a1c)';
+    const cBg  = k => store ? store.coverBg(k) : 'linear-gradient(160deg,#1b1430,#0e0a1c)';
+    const cInk = k => store ? store.coverInk(k) : 'rgba(255,255,255,0.5)';
+
+    // unique tags from genres
+    const allTags = ['All'];
+    games.forEach(g => {
+      (g.genre || '').split('/').forEach(t => {
+        const tag = t.trim();
+        if (tag && !allTags.includes(tag)) allTags.push(tag);
+      });
+    });
+
+    const filtered = activeTag === 'All' ? games
+      : games.filter(g => (g.genre || '').split('/').some(t => t.trim() === activeTag));
+
+    return {
+      heroGradient: grad(cur.grad || hero.cover),
+      heroTitle: hero.title || '',
+      heroGenre: hero.genre || '',
+      heroDesc: hero.desc || '',
+      heroEngine: hero.engine || '',
+      heroYear: hero.year || '',
+      heroRole: hero.role || '',
+      heroLink: hero.link || '#',
+      heroRepo: hero.repo || '#',
+      heroTech: hero.tech || [],
+      heroSlideLabel: cur.label || '',
+
+      heroThumbs: slides.map((sl, i) => ({
+        bg: grad(sl.grad),
+        label: sl.label,
+        borderStyle: i === heroSlide ? '2px solid #FF5E5E' : '2px solid #1E2240',
+        overlay: i === heroSlide ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.48)',
+        onClick: () => this.goSlide(i),
+      })),
+
+      heroDots: slides.map((sl, i) => ({
+        bg: i === heroSlide ? '#FF5E5E' : 'rgba(255,255,255,0.2)',
+        onClick: () => this.goSlide(i),
+      })),
+
+      onPrev: () => this.prevSlide(),
+      onNext: () => this.nextSlide(),
+
+      tagItems: allTags.map(t => ({
+        label: t,
+        bg: t === activeTag ? '#FF5E5E' : '#0F1222',
+        color: t === activeTag ? '#ffffff' : '#6070A0',
+        borderColor: t === activeTag ? '#111827' : '#232844',
+        onClick: () => this.setTag(t),
+      })),
+
+      gameCount: filtered.length,
+      displayGames: filtered.map(g => {
+        const isFeatured = g === hero;
+        return {
+          title: g.title,
+          genre: g.genre,
+          n: g.n,
+          engine: g.engine,
+          year: g.year,
+          coverBg: cBg(g.cover),
+          coverLabel: cInk(g.cover),
+          isFeatured,
+          borderStyle: isFeatured ? '2px solid #FF5E5E' : '2px solid #181C34',
+          shadowStyle: isFeatured ? '0 6px 0 rgba(255,94,94,0.22)' : '0 6px 0 rgba(0,0,0,0.55)',
+          onClick: () => this.setFeatured(games.indexOf(g)),
+        };
+      }),
+    };
+  }
+}
+</script>
+</body>
+</html>
