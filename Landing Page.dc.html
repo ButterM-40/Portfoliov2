@@ -29,7 +29,12 @@
     --accent:#FF5E5E; --on-accent:#FFFFFF; --accent-2:#FFDA14;
     --nav-bg:rgba(255,255,255,0.88); --foot:#111827; --foot-ink:#FFFFFF; --foot-soft:#9A8E88;
     --portrait:repeating-linear-gradient(45deg,#FFE2D6 0 10px,#FFEFE8 10px 20px);
-    --s-projects:#162060; --s-skills:#0B2D1E; --s-exp:#2E1506; --s-research:#1B0836; --s-about:#082820;
+    --s-projects:linear-gradient(135deg,#DBEAFE 0%,#EFF6FF 100%);
+    --s-skills:linear-gradient(135deg,#D1FAE5 0%,#ECFDF5 100%);
+    --s-exp:linear-gradient(135deg,#FEF3C7 0%,#FFFBEB 100%);
+    --s-research:linear-gradient(135deg,#EDE9FE 0%,#F5F3FF 100%);
+    --s-about:linear-gradient(135deg,#CCFBF1 0%,#F0FDFA 100%);
+    --s-eyebrow:rgba(17,24,39,0.55); --s-head:#111827; --s-body:rgba(17,24,39,0.8); --s-sublabel:rgba(17,24,39,0.5);
   }
   [data-theme="midnight"]{
     --page:#14101F; --hero:linear-gradient(160deg,#241C42 0%,#14101F 100%);
@@ -42,7 +47,8 @@
     --accent:#2EE6C5; --on-accent:#10241F; --accent-2:#FFDA14;
     --nav-bg:rgba(27,20,48,0.9); --foot:#0A0712; --foot-ink:#F5F2FF; --foot-soft:#6E63A8;
     --portrait:repeating-linear-gradient(45deg,#2A2347 0 10px,#221C3A 10px 20px);
-    --s-projects:#0B1238; --s-skills:#061A0F; --s-exp:#1C0C04; --s-research:#100420; --s-about:#041614;
+    --s-projects:#0F1F5C; --s-skills:#093D28; --s-exp:#3D1A07; --s-research:#200945; --s-about:#072E26;
+    --s-eyebrow:rgba(255,255,255,0.8); --s-head:#FFFFFF; --s-body:rgba(255,255,255,0.9); --s-sublabel:rgba(255,255,255,0.7);
   }
 </style>
 </helmet>
@@ -155,9 +161,9 @@
   <section id="projects" data-screen-label="Featured Projects" style="scroll-margin-top:90px; background:var(--s-projects); padding:80px 24px; position:relative; overflow:hidden;">
     <div style="max-width:1180px; margin:0 auto; position:relative;">
       <div data-reveal style="margin-bottom:36px;">
-        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">Beyond the arcade</span>
-        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Featured Projects</h2>
-        <p style="max-width:640px; margin:12px 0 0; font-size:14px; line-height:1.7; color:rgba(255,255,255,0.9);">The same engineering applied beyond games &mdash; full-stack apps, APIs and AI tools. Tap any card to see what it does, what it&rsquo;s built with, and where to view it.</p>
+        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--s-eyebrow);">Beyond the arcade</span>
+        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:var(--s-head); text-transform:uppercase; letter-spacing:0.5px;">Featured Projects</h2>
+        <p style="max-width:640px; margin:12px 0 0; font-size:14px; line-height:1.7; color:var(--s-body);">The same engineering applied beyond games &mdash; full-stack apps, APIs and AI tools. Tap any card to see what it does, what it&rsquo;s built with, and where to view it.</p>
       </div>
       <div data-reveal style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
         <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
@@ -180,8 +186,8 @@
   <section id="skills" data-screen-label="Skills" style="scroll-margin-top:90px; background:var(--s-skills); padding:80px 24px; position:relative; overflow:hidden;">
     <div style="max-width:1180px; margin:0 auto; position:relative;">
       <div data-reveal style="margin-bottom:34px;">
-        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">Tech Stack</span>
-        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Skills &amp; Tools</h2>
+        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--s-eyebrow);">Tech Stack</span>
+        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:var(--s-head); text-transform:uppercase; letter-spacing:0.5px;">Skills &amp; Tools</h2>
       </div>
       <div data-reveal style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
         <sc-for list="{{ skills }}" as="sk" hint-placeholder-count="4">
@@ -202,13 +208,13 @@
   <section id="experience" data-screen-label="Experience" style="scroll-margin-top:90px; background:var(--s-exp); padding:80px 24px; position:relative; overflow:hidden;">
     <div style="max-width:1180px; margin:0 auto; position:relative;">
       <div data-reveal style="margin-bottom:34px;">
-        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">Background</span>
-        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Education &amp; Experience</h2>
+        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--s-eyebrow);">Background</span>
+        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:var(--s-head); text-transform:uppercase; letter-spacing:0.5px;">Education &amp; Experience</h2>
       </div>
       <div data-reveal style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:24px;">
         <!-- experience -->
         <div>
-          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:14px;">Experience</div>
+          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--s-sublabel); margin-bottom:14px;">Experience</div>
           <div style="display:flex; flex-direction:column; gap:16px;">
             <sc-for list="{{ experience }}" as="ex" hint-placeholder-count="3">
               <div style="background:var(--card); border:2px solid var(--border); border-radius:18px; padding:22px; box-shadow:0 5px 0 var(--shadow);">
@@ -222,7 +228,7 @@
         </div>
         <!-- education -->
         <div>
-          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:14px;">Education</div>
+          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--s-sublabel); margin-bottom:14px;">Education</div>
           <div style="display:flex; flex-direction:column; gap:16px;">
             <sc-for list="{{ education }}" as="ed" hint-placeholder-count="2">
               <div style="background:var(--card); border:2px solid var(--border); border-radius:18px; padding:22px; box-shadow:0 5px 0 var(--shadow);">
@@ -243,8 +249,8 @@
     <div style="max-width:1180px; margin:0 auto; position:relative;">
       <div data-reveal style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:34px;">
         <div>
-          <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">Research</span>
-          <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:#fff; text-transform:uppercase; letter-spacing:0.5px;">Published Papers</h2>
+          <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--s-eyebrow);">Research</span>
+          <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:46px; margin:8px 0 0; color:var(--s-head); text-transform:uppercase; letter-spacing:0.5px;">Published Papers</h2>
         </div>
         <a href="https://scholar.google.com" target="_blank" rel="noopener" style="text-decoration:none; background:var(--accent); color:var(--on-accent); border:2px solid var(--border); border-radius:999px; padding:11px 22px; font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; box-shadow:0 5px 0 var(--shadow); transition:transform .08s, box-shadow .08s;" style-active="transform:translateY(5px); box-shadow:0 0 0 var(--shadow);">Google Scholar</a>
       </div>
@@ -263,14 +269,14 @@
         <div style="aspect-ratio:1/1; border:2px solid var(--border); border-radius:24px; background:var(--portrait); display:flex; align-items:center; justify-content:center; box-shadow:0 10px 0 var(--accent);"><span style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--card-soft);">[ portrait ]</span></div>
       </div>
       <div data-reveal>
-        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8);">About</span>
-        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:44px; margin:8px 0 0; color:#fff; letter-spacing:-0.5px;">{{ aboutHeading }}</h2>
-        <p style="max-width:560px; margin:18px 0 0; font-size:15px; line-height:1.75; color:rgba(255,255,255,0.9);">{{ aboutBio }}</p>
+        <span style="font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--s-eyebrow);">About</span>
+        <h2 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:44px; margin:8px 0 0; color:var(--s-head); letter-spacing:-0.5px;">{{ aboutHeading }}</h2>
+        <p style="max-width:560px; margin:18px 0 0; font-size:15px; line-height:1.75; color:var(--s-body);">{{ aboutBio }}</p>
         <div style="margin-top:24px;">
-          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-bottom:12px;">{{ aboutLookingTitle }}</div>
+          <div style="font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--s-sublabel); margin-bottom:12px;">{{ aboutLookingTitle }}</div>
           <div style="display:flex; flex-direction:column; gap:8px;">
             <sc-for list="{{ aboutLooking }}" as="lf" hint-placeholder-count="3">
-              <div style="display:flex; align-items:center; gap:10px; color:#fff; font-size:14px;"><span style="width:8px; height:8px; border-radius:50%; background:{{ lf.dot }};"></span>{{ lf.text }}</div>
+              <div style="display:flex; align-items:center; gap:10px; color:var(--s-head); font-size:14px;"><span style="width:8px; height:8px; border-radius:50%; background:{{ lf.dot }};"></span>{{ lf.text }}</div>
             </sc-for>
           </div>
         </div>

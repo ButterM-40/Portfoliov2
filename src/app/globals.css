@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; padding: 0; }
+::selection { background: #FFDA14; color: #111827; }
+
+@keyframes pop {
+  0%   { transform: scale(0); }
+  70%  { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+
+:root {
+  --page: #FFF2EC;
+  --hero: linear-gradient(135deg,#FF5E5E 0%,#FF8169 100%);
+  --stat: linear-gradient(135deg,#FFD914 0%,#FF8A3D 100%);
+  --stat-ink: #111827; --stat-label: #5A3A00;
+  --feature: linear-gradient(135deg,#FF5E5E 0%,#FF8169 100%);
+  --band: linear-gradient(135deg,#FFEADE 0%,#FFDCEC 100%);
+  --band-alt: linear-gradient(135deg,#ECE6FF 0%,#DEF1FF 100%);
+  --ink: #111827; --soft: #6B5B55; --eyebrow: #C2410C;
+  --card: #FFFFFF; --card-ink: #111827; --card-soft: #8A8AA0;
+  --border: #111827; --shadow: #111827;
+  --chip-bg: #FFF4EE; --chip-border: #F0D9CE;
+  --accent: #FF5E5E; --on-accent: #FFFFFF; --accent-2: #FFDA14;
+  --nav-bg: rgba(255,255,255,0.88);
+  --foot: #111827; --foot-ink: #FFFFFF; --foot-soft: #9A8E88;
+  --portrait: repeating-linear-gradient(45deg,#FFE2D6 0 10px,#FFEFE8 10px 20px);
+  --s-projects: linear-gradient(135deg,#FF7A5E 0%,#FF5E40 100%);
+  --s-skills:   linear-gradient(135deg,#FF5E7A 0%,#FF4060 100%);
+  --s-exp:      linear-gradient(135deg,#FF9A5E 0%,#FF7A40 100%);
+  --s-research: linear-gradient(135deg,#FF5E5E 0%,#E84040 100%);
+  --s-about:    linear-gradient(135deg,#FF5E90 0%,#E83870 100%);
+  --s-eyebrow: rgba(255,255,255,0.8); --s-head: #FFFFFF;
+  --s-body: rgba(255,255,255,0.9);    --s-sublabel: rgba(255,255,255,0.7);
+}
+
+[data-theme="midnight"] {
+  --page: #14101F;
+  --hero: linear-gradient(160deg,#241C42 0%,#14101F 100%);
+  --stat: #1B1430; --stat-ink: #FFDA14; --stat-label: #9C8FD6;
+  --feature: linear-gradient(160deg,#1B1430 0%,#241C42 100%);
+  --band: linear-gradient(160deg,#16111F 0%,#1E1736 100%);
+  --band-alt: linear-gradient(160deg,#1E1736 0%,#251D44 100%);
+  --ink: #F5F2FF; --soft: #A99FD6; --eyebrow: #2EE6C5;
+  --card: #221C3A; --card-ink: #F5F2FF; --card-soft: #8B82C7;
+  --border: #3A2F66; --shadow: #000000;
+  --chip-bg: #1B1430; --chip-border: #3A2F66;
+  --accent: #2EE6C5; --on-accent: #10241F; --accent-2: #FFDA14;
+  --nav-bg: rgba(27,20,48,0.9);
+  --foot: #0A0712; --foot-ink: #F5F2FF; --foot-soft: #6E63A8;
+  --portrait: repeating-linear-gradient(45deg,#2A2347 0 10px,#221C3A 10px 20px);
+  --s-projects: #1B1430; --s-skills: #1B1430;
+  --s-exp: #1B1430;      --s-research: #1B1430; --s-about: #1B1430;
+  --s-eyebrow: rgba(255,255,255,0.8); --s-head: #FFFFFF;
+  --s-body: rgba(255,255,255,0.9);    --s-sublabel: rgba(255,255,255,0.7);
+}
+
+/* reveal animation */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+.reveal.visible { opacity: 1; transform: none; }
