@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Goal
 
-This is a personal portfolio website being migrated toward a production stack: **Vercel** for hosting, **Supabase** as backend (image storage + database), and a full **Admin Panel** for content management.
+This is a personal portfolio website hosted on **Vercel** (Next.js), with a private **Admin Panel** for content management used only by the owner.
 
-The current codebase is a flat-file, browser-only portfolio built on a custom **DC-Runtime** framework (see `support.js`). All data is persisted to browser `localStorage` via `portfolio-data.js`. The migration target is a proper Next.js app with Supabase replacing localStorage.
+The DC-Runtime static site (`Admin.dc.html`) is the editing interface. Changes are exported as JSON (`text.txt`) and synced into the Next.js data layer via `scripts/sync-portfolio.js`. The Next.js app (`src/data/portfolio.ts`) is the source of truth for the Vercel deployment.
 
 ## Current Architecture
 
@@ -32,20 +32,12 @@ Twelve named gradients are defined (`violet`, `indigo`, `lavender`, `aqua`, `pin
 ### Themes
 Two themes defined as CSS variables inside `Landing Page.dc.html`: default light (`coral`) and dark (`midnight`). Theme switching uses `data-theme` on the root element.
 
-## Planned Migration (Vercel + Supabase)
+## Content Update Workflow
 
-When migrating to Next.js + Supabase:
-- Replace `localStorage` / `PortfolioStore` with Supabase tables and storage buckets
-- Game/project cover images → Supabase Storage bucket
-- Admin Panel (`Admin.dc.html` logic) → Next.js `/admin` route with Supabase auth protecting it
-- Deploy via Vercel (connect GitHub repo; env vars go in Vercel dashboard and `.env.local`)
-
-Key Supabase env vars to wire up:
-```
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=   # admin-only operations only
-```
+1. Edit content in `Admin.dc.html` (opens in browser, saves to `localStorage`)
+2. Export from Admin → saves to `text.txt`
+3. Run `node scripts/sync-portfolio.js` → rewrites `src/data/portfolio.ts`
+4. `git add src/data/portfolio.ts && git commit -m "..." && git push` → Vercel auto-deploys
 
 ## Development (Current Static Version)
 
