@@ -41,6 +41,12 @@ export default function HomePage() {
     return () => io.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!games.length) return;
+    const t = setInterval(() => setHeroSlide(s => (s + 1) % games.length), 3500);
+    return () => clearInterval(t);
+  }, [games.length]);
+
   function getAC() {
     if (mutedRef.current) return null;
     try { acRef.current = acRef.current || new AudioContext(); return acRef.current; } catch { return null; }
@@ -68,11 +74,8 @@ export default function HomePage() {
   const curSlide  = slides[slide] ?? slides[0];
   const accent    = '#FFDA14';
 
-  // Hero showcase — first featured game, or first game
-  const heroGame   = games.find((g: any) => g.featured) ?? games[0];
-  const heroSlides = heroGame?.slides ?? [];
-  const heroCur    = heroSlides[heroSlide] ?? heroSlides[0];
-  const heroYtId   = getYoutubeId((heroCur as any)?.youtube || '');
+  // Hero showcase — cycles through all games automatically
+  const heroGame = games[heroSlide % Math.max(games.length, 1)] ?? games[0];
 
   // Display lists
   const displayedGames    = (games.some((g: any) => g.featured) ? games.filter((g: any) => g.featured) : games).slice(0, 6);
@@ -140,49 +143,29 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* HERO GAME SHOWCASE */}
+          {/* HERO GAME SHOWCASE — auto-cycles through all games */}
           {heroGame && (
             <div className="reveal">
               <div style={{ background: '#fff', border: '2px solid #111827', borderRadius: 24, padding: 14, boxShadow: '0 12px 0 #111827' }}>
-                {/* Carousel */}
-                <div style={{ position: 'relative', aspectRatio: '16/9', borderRadius: 14, overflow: 'hidden', border: '2px solid #111827', background: heroYtId ? '#000' : (heroCur as any)?.image ? `url(${(heroCur as any).image}) center/cover no-repeat` : `radial-gradient(rgba(255,255,255,0.16) 1.2px, transparent 1.6px) 0 0 / 13px 13px, ${grad(heroCur?.grad ?? 'dark')}` }}>
+                {/* Animated game card */}
+                <div
+                  key={heroGame.id}
+                  style={{ position: 'relative', aspectRatio: '16/9', borderRadius: 14, overflow: 'hidden', border: '2px solid #111827', background: coverBg(heroGame.cover), animation: 'heroFade 0.45s ease' }}
+                >
                   <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(0deg,rgba(255,255,255,0.05) 0 2px,transparent 2px 5px)', pointerEvents: 'none', zIndex: 2 }} />
-                  {heroYtId ? (
-                    <iframe src={`https://www.youtube.com/embed/${heroYtId}?rel=0`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none', zIndex: 3 }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
-                  ) : !((heroCur as any)?.image) && (
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 3 }}>
-                      <div style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 28, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: 1, textAlign: 'center', padding: '0 16px' }}>{heroCur?.label}</div>
-                    </div>
-                  )}
-                  {!heroYtId && heroSlides.length > 1 && (
-                    <>
-                      <button onClick={() => { setHeroSlide(s => (s-1+heroSlides.length)%heroSlides.length); beep(380,0.07); }} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', zIndex: 4, width: 38, height: 38, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: '1.5px solid rgba(255,255,255,0.2)', color: '#fff', fontSize: 20, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>‹</button>
-                      <button onClick={() => { setHeroSlide(s => (s+1)%heroSlides.length); beep(420,0.07); }} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', zIndex: 4, width: 38, height: 38, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: '1.5px solid rgba(255,255,255,0.2)', color: '#fff', fontSize: 20, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>›</button>
-                    </>
-                  )}
-                  {/* Slide dots */}
-                  {heroSlides.length > 1 && (
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 3 }}>
+                    <div style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: isMobile ? 24 : 32, color: coverInk(heroGame.cover), textTransform: 'uppercase', letterSpacing: 1, textAlign: 'center', padding: '0 16px', textShadow: '0 3px 0 rgba(0,0,0,0.2)' }}>{heroGame.title}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: coverInk(heroGame.cover), opacity: 0.7, marginTop: 6 }}>{heroGame.genre}</div>
+                  </div>
+                  {/* Game dots */}
+                  {games.length > 1 && (
                     <div style={{ position: 'absolute', bottom: 10, left: 0, right: 0, display: 'flex', gap: 6, justifyContent: 'center', zIndex: 4 }}>
-                      {heroSlides.map((_, i) => <button key={i} onClick={() => { setHeroSlide(i); beep(440, 0.06); }} style={{ width: 8, height: 8, borderRadius: '50%', background: i === heroSlide ? '#FFDA14' : 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer', padding: 0 }} />)}
+                      {games.map((_, i) => (
+                        <button key={i} onClick={() => { setHeroSlide(i); beep(440, 0.06); }} style={{ width: 8, height: 8, borderRadius: '50%', background: i === heroSlide ? '#FFDA14' : 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer', padding: 0 }} />
+                      ))}
                     </div>
                   )}
                 </div>
-                {/* Thumbnail strip */}
-                {heroSlides.length > 1 && (
-                  <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
-                    {heroSlides.map((sl, i) => {
-                      const slYt = getYoutubeId((sl as any).youtube || '');
-                      const slImg = (sl as any).image || '';
-                      const slBg = slYt ? `url(https://img.youtube.com/vi/${slYt}/mqdefault.jpg) center/cover no-repeat` : slImg ? `url(${slImg}) center/cover no-repeat` : grad(sl.grad);
-                      return (
-                        <button key={i} onClick={() => { setHeroSlide(i); beep(400, 0.06); }} style={{ flex: 1, aspectRatio: '16/9', borderRadius: 7, background: slBg, border: i === heroSlide ? '2px solid #FFDA14' : '2px solid #e0e0e0', cursor: 'pointer', padding: 0, position: 'relative', overflow: 'hidden' }}>
-                          {i !== heroSlide && <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)' }} />}
-                          {slYt && <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ color: '#fff', fontSize: 12, opacity: i === heroSlide ? 1 : 0.7 }}>▶</span></div>}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
                 {/* Game info */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '12px 4px 4px' }}>
                   <div>
