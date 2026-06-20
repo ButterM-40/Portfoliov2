@@ -21,6 +21,10 @@ export function useTheme(defaultTheme: Theme = 'coral') {
     return () => window.removeEventListener('storage', onStorage);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   function toggleTheme() {
     const next: Theme = theme === 'coral' ? 'midnight' : 'coral';
     setTheme(next);
