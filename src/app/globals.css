@@ -67,7 +67,7 @@ html[data-theme="coral"]::-webkit-scrollbar { width: 8px; height: 8px; }
 html::-webkit-scrollbar-track,
 html[data-theme="coral"]::-webkit-scrollbar-track { background: #F0C4B0; }
 html::-webkit-scrollbar-thumb,
-html[data-theme="coral"]::-webkit-scrollbar-thumb { background: #FF8169; border-radius: 4px; border: 2px solid #F0C4B0; }
+html[data-theme="coral"]::-webkit-scrollbar-thumb { background: #FF8169; border-radius: 999px; border: 2px solid #F0C4B0; }
 html::-webkit-scrollbar-thumb:hover,
 html[data-theme="coral"]::-webkit-scrollbar-thumb:hover { background: #FF5E5E; }
 
@@ -78,7 +78,7 @@ html[data-theme="midnight"] {
 }
 html[data-theme="midnight"]::-webkit-scrollbar { width: 8px; height: 8px; }
 html[data-theme="midnight"]::-webkit-scrollbar-track { background: #0A0712; }
-html[data-theme="midnight"]::-webkit-scrollbar-thumb { background: #2D2456; border-radius: 4px; border: 2px solid #0A0712; }
+html[data-theme="midnight"]::-webkit-scrollbar-thumb { background: #2D2456; border-radius: 999px; border: 2px solid #0A0712; }
 html[data-theme="midnight"]::-webkit-scrollbar-thumb:hover { background: #2EE6C5; }
 
 /* reveal animation */
