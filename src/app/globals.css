@@ -60,14 +60,14 @@ body { margin: 0; padding: 0; }
 /* ── Scrollbar — coral (default) ── */
 html, html[data-theme="coral"] {
   scrollbar-width: thin;
-  scrollbar-color: #FFA98A #FFEDE5;
+  scrollbar-color: #FF8169 #F0C4B0;
 }
 html::-webkit-scrollbar,
 html[data-theme="coral"]::-webkit-scrollbar { width: 8px; height: 8px; }
 html::-webkit-scrollbar-track,
-html[data-theme="coral"]::-webkit-scrollbar-track { background: #FFEDE5; }
+html[data-theme="coral"]::-webkit-scrollbar-track { background: #F0C4B0; }
 html::-webkit-scrollbar-thumb,
-html[data-theme="coral"]::-webkit-scrollbar-thumb { background: #FFA98A; border-radius: 4px; border: 2px solid #FFEDE5; }
+html[data-theme="coral"]::-webkit-scrollbar-thumb { background: #FF8169; border-radius: 4px; border: 2px solid #F0C4B0; }
 html::-webkit-scrollbar-thumb:hover,
 html[data-theme="coral"]::-webkit-scrollbar-thumb:hover { background: #FF5E5E; }
 
