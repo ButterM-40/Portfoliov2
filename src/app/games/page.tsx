@@ -111,7 +111,8 @@ export default function GamesPage() {
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.15fr 0.95fr', gap: isMobile ? 24 : 48, alignItems: 'start' }}>
             {/* Carousel */}
             <div>
-              <div style={{ position: 'relative', aspectRatio: '16/9', borderRadius: 12, overflow: 'hidden', border: `2px solid ${theme === 'midnight' ? '#232844' : 'var(--border)'}`, boxShadow: `0 14px 0 var(--shadow)`, background: curYtId ? '#000' : (cur as any).image ? `url(${(cur as any).image}) center/cover no-repeat` : grad(cur?.grad ?? 'dark') }}>
+              <div style={{ background: theme === 'midnight' ? '#0D1020' : 'rgba(0,0,0,0.07)', borderRadius: 16, padding: 10, border: `2px solid ${theme === 'midnight' ? '#232844' : 'var(--border)'}`, boxShadow: `0 14px 0 var(--shadow)` }}>
+              <div style={{ position: 'relative', aspectRatio: '16/9', borderRadius: 8, overflow: 'hidden', border: `2px solid ${theme === 'midnight' ? '#1A1F38' : 'rgba(0,0,0,0.15)'}`, background: curYtId ? '#000' : (cur as any).image ? `url(${(cur as any).image}) center/cover no-repeat` : grad(cur?.grad ?? 'dark') }}>
                 {curYtId ? (
                   <iframe
                     src={`https://www.youtube.com/embed/${curYtId}?rel=0`}
@@ -139,13 +140,13 @@ export default function GamesPage() {
               </div>
               {/* Thumbnails — hidden for 1 slide, fixed equal size for 2+ */}
               {slides.length > 1 && (
-                <div style={{ display: 'flex', gap: 8, marginTop: 10, overflowX: slides.length > 3 ? 'auto' : 'visible' }}>
+                <div style={{ display: 'flex', gap: 8, marginTop: 8, overflowX: slides.length > 3 ? 'auto' : 'visible' }}>
                   {slides.map((sl, i) => {
                     const slYtId = getYoutubeId((sl as any).youtube || '');
                     const slImg  = (sl as any).image || '';
                     const slBg   = slYtId ? `url(https://img.youtube.com/vi/${slYtId}/mqdefault.jpg) center/cover no-repeat` : slImg ? `url(${slImg}) center/cover no-repeat` : grad(sl.grad);
                     return (
-                      <button key={i} onClick={() => { setHeroSlide(i); beep(400, 0.06); }} style={{ flexShrink: 0, width: slides.length > 3 ? 120 : 'calc(33.33% - 6px)', aspectRatio: '16/9', borderRadius: 7, overflow: 'hidden', border: i === heroSlide ? `2px solid ${accent}` : `2px solid ${theme === 'midnight' ? '#1E2240' : 'var(--border)'}`, background: slBg, cursor: 'pointer', padding: 0, position: 'relative' }}>
+                      <button key={i} onClick={() => { setHeroSlide(i); beep(400, 0.06); }} style={{ flexShrink: 0, width: 'calc(33.33% - 6px)', aspectRatio: '16/9', borderRadius: 6, overflow: 'hidden', border: i === heroSlide ? `2px solid ${accent}` : `2px solid ${theme === 'midnight' ? '#1A1F38' : 'rgba(0,0,0,0.15)'}`, background: slBg, cursor: 'pointer', padding: 0, position: 'relative' }}>
                         {i !== heroSlide && <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.48)' }} />}
                         {slYtId && <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, pointerEvents: 'none' }}><span style={{ fontSize: 14, color: '#fff', opacity: i === heroSlide ? 1 : 0.7 }}>▶</span></div>}
                       </button>
@@ -153,6 +154,7 @@ export default function GamesPage() {
                   })}
                 </div>
               )}
+              </div>
             </div>
             {/* Info */}
             <div style={{ paddingTop: 8 }}>
