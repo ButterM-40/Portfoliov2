@@ -434,30 +434,13 @@ export default function HomePage() {
                   </div>
                 );
               })()}
-              {slides.length > 1 && <button onClick={() => setSlide(s => (s-1+slides.length)%slides.length)} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', width: 40, height: 40, borderRadius: '50%', background: '#fff', border: '2px solid #111827', cursor: 'pointer', fontSize: 20, fontWeight: 800, color: '#111827', boxShadow: '0 4px 0 #111827', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 4, padding: 0 }}>‹</button>}
-              {slides.length > 1 && <button onClick={() => setSlide(s => (s+1)%slides.length)}             style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', width: 40, height: 40, borderRadius: '50%', background: '#fff', border: '2px solid #111827', cursor: 'pointer', fontSize: 20, fontWeight: 800, color: '#111827', boxShadow: '0 4px 0 #111827', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 4, padding: 0 }}>›</button>}
+              <button onClick={() => setSlide(s => (s-1+slides.length)%slides.length)} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', width: 40, height: 40, borderRadius: '50%', background: '#fff', border: '2px solid #111827', cursor: 'pointer', fontSize: 20, fontWeight: 800, color: '#111827', boxShadow: '0 4px 0 #111827', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 4, padding: 0 }}>‹</button>
+              <button onClick={() => setSlide(s => (s+1)%slides.length)}             style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', width: 40, height: 40, borderRadius: '50%', background: '#fff', border: '2px solid #111827', cursor: 'pointer', fontSize: 20, fontWeight: 800, color: '#111827', boxShadow: '0 4px 0 #111827', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 4, padding: 0 }}>›</button>
               <button onClick={() => setSelected(null)} style={{ position: 'absolute', top: 12, right: 12, width: 38, height: 38, borderRadius: '50%', background: '#fff', border: '2px solid #111827', cursor: 'pointer', fontSize: 14, fontWeight: 800, color: '#111827', boxShadow: '0 4px 0 #111827', zIndex: 4, padding: 0 }}>✕</button>
-            </div>
-
-            {/* Slide thumbnails — hidden for 1 slide, fixed 1/3 size for 2–3, carousel for 4+ */}
-            {slides.length > 1 && (
-              <div style={{ display: 'flex', gap: 6, padding: '8px 14px', borderBottom: '2px solid var(--border)', overflowX: slides.length > 3 ? 'auto' : 'visible' }}>
-                {slides.map((sl, i) => {
-                  const tYt  = getYoutubeId((sl as any).youtube || '');
-                  const tImg = (sl as any).image || '';
-                  const tBg  = tYt  ? `url(https://img.youtube.com/vi/${tYt}/mqdefault.jpg) center/cover no-repeat`
-                              : tImg ? `url(${tImg}) center/cover no-repeat`
-                              : `radial-gradient(rgba(255,255,255,0.16) 1.2px,transparent 1.6px) 0 0/13px 13px,${grad(sl.grad)}`;
-                  return (
-                    <button key={i} onClick={() => { setSlide(i); beep(400, 0.06); }} style={{ flexShrink: 0, width: slides.length > 3 ? 130 : 'calc(33.33% - 4px)', aspectRatio: '16/9', borderRadius: 8, background: tBg, border: `2px solid ${i === slide ? '#FFDA14' : 'var(--border)'}`, cursor: 'pointer', padding: 0, position: 'relative', overflow: 'hidden', transition: 'border-color .15s' }}>
-                      {i !== slide && <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.38)' }} />}
-                      {tYt && <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1 }}><span style={{ color: '#fff', fontSize: 14 }}>▶</span></div>}
-                    </button>
-                  );
-                })}
+              <div style={{ position: 'absolute', bottom: 12, left: 0, right: 0, display: 'flex', gap: 8, justifyContent: 'center', zIndex: 4 }}>
+                {slides.map((_, i) => <button key={i} onClick={() => setSlide(i)} style={{ width: 10, height: 10, borderRadius: '50%', background: i === slide ? accent : 'rgba(17,24,39,0.18)', border: '2px solid #111827', cursor: 'pointer', padding: 0 }} />)}
               </div>
-            )}
-
+            </div>
             <div style={{ padding: isMobile ? '20px 20px 32px' : 26, maxHeight: isMobile ? '60vh' : 'none', overflowY: isMobile ? 'auto' : 'visible' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
                 <div>

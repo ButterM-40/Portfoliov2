@@ -137,20 +137,22 @@ export default function ProjectsPage() {
                   </>
                 )}
               </div>
-              {/* Thumbnails */}
-              <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
-                {slides.map((sl, i) => {
-                  const slYtId = getYoutubeId((sl as any).youtube || '');
-                  const slImg  = (sl as any).image || '';
-                  const slBg   = slYtId ? `url(https://img.youtube.com/vi/${slYtId}/mqdefault.jpg) center/cover no-repeat` : slImg ? `url(${slImg}) center/cover no-repeat` : grad(sl.grad);
-                  return (
-                    <button key={i} onClick={() => { setHeroSlide(i); beep(400, 0.06); }} style={{ flex: 1, aspectRatio: '16/9', borderRadius: 7, overflow: 'hidden', border: i === heroSlide ? `2px solid ${accent}` : `2px solid ${theme === 'midnight' ? '#1E2240' : 'var(--border)'}`, background: slBg, cursor: 'pointer', padding: 0, position: 'relative' }}>
-                      {i !== heroSlide && <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.48)' }} />}
-                      {slYtId && <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, pointerEvents: 'none' }}><span style={{ fontSize: 14, color: '#fff', opacity: i === heroSlide ? 1 : 0.7 }}>▶</span></div>}
-                    </button>
-                  );
-                })}
-              </div>
+              {/* Thumbnails — hidden for 1 slide, fixed equal size for 2+ */}
+              {slides.length > 1 && (
+                <div style={{ display: 'flex', gap: 8, marginTop: 10, overflowX: slides.length > 3 ? 'auto' : 'visible' }}>
+                  {slides.map((sl, i) => {
+                    const slYtId = getYoutubeId((sl as any).youtube || '');
+                    const slImg  = (sl as any).image || '';
+                    const slBg   = slYtId ? `url(https://img.youtube.com/vi/${slYtId}/mqdefault.jpg) center/cover no-repeat` : slImg ? `url(${slImg}) center/cover no-repeat` : grad(sl.grad);
+                    return (
+                      <button key={i} onClick={() => { setHeroSlide(i); beep(400, 0.06); }} style={{ flexShrink: 0, width: slides.length > 3 ? 120 : 'calc(33.33% - 6px)', aspectRatio: '16/9', borderRadius: 7, overflow: 'hidden', border: i === heroSlide ? `2px solid ${accent}` : `2px solid ${theme === 'midnight' ? '#1E2240' : 'var(--border)'}`, background: slBg, cursor: 'pointer', padding: 0, position: 'relative' }}>
+                        {i !== heroSlide && <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.48)' }} />}
+                        {slYtId && <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, pointerEvents: 'none' }}><span style={{ fontSize: 14, color: '#fff', opacity: i === heroSlide ? 1 : 0.7 }}>▶</span></div>}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
             {/* Info */}
             <div style={{ paddingTop: 8 }}>
