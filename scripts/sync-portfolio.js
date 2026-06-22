@@ -10,7 +10,7 @@ const DEST = path.join(__dirname, '..', 'src', 'data', 'portfolio.ts');
 const raw = fs.readFileSync(SRC, 'utf8');
 const d   = JSON.parse(raw);
 
-function q(s)  { return s == null ? "''" : "'" + String(s).replace(/'/g, "\\'") + "'"; }
+function q(s)  { return s == null ? "''" : "'" + String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\r?\n/g, '\\n') + "'"; }
 function qs(s) { return s == null ? '' : String(s); }
 
 function slideEntry(sl) {
@@ -76,6 +76,24 @@ export function coverInk(key: string) {
 export function coverBg(key: string) {
   const d = GRADIENTS[key as GradKey] ?? GRADIENTS.dark;
   return \`radial-gradient(\${d.dot} 1.2px, transparent 1.6px) 0 0 / 11px 11px, \${d.grad}\`;
+}
+
+type Slide = { grad: string; image?: string; youtube?: string };
+
+function youtubeId(url: string): string | null {
+  const m = url.match(/[?&]v=([^&]+)/);
+  return m?.[1] ?? null;
+}
+
+export function slide0Bg(slides: Slide[] | undefined, fallbackCover: string): string {
+  if (!slides?.length) return coverBg(fallbackCover);
+  const s = slides[0];
+  if (s.youtube) {
+    const id = youtubeId(s.youtube);
+    if (id) return \`url(https://img.youtube.com/vi/\${id}/hqdefault.jpg) center / cover no-repeat\`;
+  }
+  if (s.image) return \`url(\${s.image}) center / cover no-repeat\`;
+  return coverBg(s.grad);
 }
 
 export const brand = { name: ${q(d.brand?.name)}, accentWord: ${q(d.brand?.accentWord)} };

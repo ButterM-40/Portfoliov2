@@ -26,6 +26,24 @@ export function coverBg(key: string) {
   return `radial-gradient(${d.dot} 1.2px, transparent 1.6px) 0 0 / 11px 11px, ${d.grad}`;
 }
 
+type Slide = { grad: string; image?: string; youtube?: string };
+
+function youtubeId(url: string): string | null {
+  const m = url.match(/[?&]v=([^&]+)/);
+  return m?.[1] ?? null;
+}
+
+export function slide0Bg(slides: Slide[] | undefined, fallbackCover: string): string {
+  if (!slides?.length) return coverBg(fallbackCover);
+  const s = slides[0];
+  if (s.youtube) {
+    const id = youtubeId(s.youtube);
+    if (id) return `url(https://img.youtube.com/vi/${id}/hqdefault.jpg) center / cover no-repeat`;
+  }
+  if (s.image) return `url(${s.image}) center / cover no-repeat`;
+  return coverBg(s.grad);
+}
+
 export const brand = { name: 'Butter', accentWord: '.dev' };
 
 export const heroData = {
@@ -55,21 +73,21 @@ export const games = [
     desc: 'Developed a horror survival game in 48 hours at the Chillennium 2025 Game Jam hosted by Texas A&M University. Implemented core systems including dialogue, an interactive map, and puzzle mechanics.',
     roleDesc: '',
     tech: ['Godot'],
-    slides: [{ label: 'Dungeon Raid', grad: 'violet', image: '', youtube: 'https://www.youtube.com/watch?v=xBPetsN8w90&source_ve_path=OTY3MTQ&embeds_referring_euri=https%3A%2F%2Ft33-h33-studio.itch.io%2Fhalf-hazard' }, { label: 'New screen', grad: 'violet', image: '' }] },
+    slides: [{ label: 'Logo', grad: 'violet', image: '' }, { label: 'Logo', grad: 'violet', image: '', youtube: 'https://www.youtube.com/watch?v=xBPetsN8w90&source_ve_path=OTY3MTQ&embeds_referring_euri=https%3A%2F%2Ft33-h33-studio.itch.io%2Fhalf-hazard' }] },
   { id: 'g2', n: 'Game 2', title: 'Spirits of the Wind', genre: 'Puzzle / Platform', cover: 'lavender',
     role: 'Lead Programmer', engine: 'Godot', year: '2024',
     repo: 'https://github.com/ButterM-40/BlitzWaveStudioGameJam70', link: 'https://blitzwavesstudios.itch.io/spirits-of-the-wild',
-    desc: 'Led a 6-person team to design and ship a puzzle game in one week for Godot Wild Jam 84. Contributed systems such as UI design, map development, a character swap mechanic, and coordinating with the team.',
-    roleDesc: '',
+    desc: 'A puzzle platformer inspired by Native American culture. Made for the Godot WildJam 70. You wake up and you and several others are all trapped in one body. When you and the others in your body die you turn into Totems and start at the begining of the puzzle. You all have angered a spirit in some way and now it wants revenge.',
+    roleDesc: 'Led a 6-person team to design and ship a puzzle game in one week for Godot Wild Jam 84. Contributed systems such as UI design, map development, a character swap mechanic, and coordinating with the team.',
     tech: ['Godot'],
-    slides: [{ label: 'Time Trial', grad: 'lavender', image: '' }, { label: 'Track Editor', grad: 'pink', image: '' }, { label: 'Ghost Replay', grad: 'violet', image: '' }, { label: 'New screen', grad: 'lavender', image: '' }, { label: 'New screen', grad: 'lavender', image: '' }] },
-  { id: 'g3', n: 'Game 3', title: 'Sole Survivor', genre: 'Arcade ', cover: 'aqua',
+    slides: [{ label: 'Main Scene', grad: 'lavender', image: '' }, { label: 'Gameplay', grad: 'lavender', image: '' }] },
+  { id: 'g3', n: 'Game 1', title: 'Sole Survivor', genre: 'Arcade ', cover: 'aqua',
     role: 'Lead Programmer', engine: 'Unity', year: '2023',
     repo: 'https://github.com/ButterM-40/202320-final-game-immortal-players-only', link: '#',
-    desc: 'Led a team of 3 to build a Vampire Survivors-style game for a game dev competition, earning Player\'s Choice and 3rd place. Built the leaderboard, enemy spawning system, and scoring mechanics.',
-    roleDesc: '',
+    desc: 'A Sole Survivor in a world overunned by Vampires, your goal is to survive! \nEnjoy this Vampire Survivors, and try to reach the highscore.',
+    roleDesc: 'Led a team of 3 to build a Vampire Survivors-style game for a game dev competition, earning Player\'s Choice and 3rd place. Built the leaderboard, enemy spawning system, and scoring mechanics. ',
     tech: ['Unity', 'Asesprite'],
-    slides: [{ label: 'Endless Run', grad: 'aqua', image: '' }, { label: 'Combo Meter', grad: 'purple', image: '' }, { label: 'Synth Tunnel', grad: 'teal', image: '' }] },
+    slides: [{ label: 'Synth Tunnel', grad: 'teal', image: '' }] },
 ];
 
 export const projects = [
