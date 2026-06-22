@@ -17,7 +17,7 @@ function slideEntry(sl) {
   const parts = [
     `label: ${q(sl.label)}`,
     `grad: ${q(sl.grad)}`,
-    `image: ${q('')}`,
+    `image: ${q(sl.image || '')}`,
   ];
   if (sl.youtube) parts.push(`youtube: ${q(sl.youtube)}`);
   return `{ ${parts.join(', ')} }`;
