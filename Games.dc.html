@@ -125,7 +125,9 @@
               <sc-if value="{{ g.isFeatured }}" hint-placeholder-val="{{ false }}">
                 <div style="position:absolute; top:10px; left:10px; background:#FFDA14; color:#111827; font-size:9px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:999px; border:1.5px solid #111827; z-index:2;">▶ NOW PLAYING</div>
               </sc-if>
-              <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:20px; letter-spacing:2px; color:{{ g.coverLabel }}; text-transform:uppercase; z-index:1; position:relative;">{{ g.n }}</span>
+              <sc-if value="{{ g.showLabel }}" hint-placeholder-val="{{ false }}">
+                <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:20px; letter-spacing:2px; color:{{ g.coverLabel }}; text-transform:uppercase; z-index:1; position:relative;">{{ g.n }}</span>
+              </sc-if>
             </div>
             <div style="padding:14px 16px 16px;">
               <h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; margin:0 0 3px; color:#EEF0FF; text-transform:uppercase; letter-spacing:0.5px;">{{ g.title }}</h3>
@@ -264,10 +266,11 @@ class Component extends DCLogic {
         return {
           title: g.title,
           genre: g.genre,
-          n: g.n,
           engine: g.engine,
           year: g.year,
-          coverBg: cBg(g.cover),
+          coverBg: (g.slides && g.slides.length) ? grad((g.slides[0] && g.slides[0].grad) || g.cover) : cBg(g.cover),
+          showLabel: !(g.slides && g.slides.length),
+          n: g.n,
           coverLabel: cInk(g.cover),
           isFeatured,
           borderStyle: isFeatured ? '2px solid #FF5E5E' : '2px solid #181C34',

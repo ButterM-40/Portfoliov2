@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { grad, coverBg, coverInk } from '@/data/portfolio';
+import { grad, coverBg, coverInk, slide0Bg } from '@/data/portfolio';
 import { usePortfolioData } from '@/hooks/usePortfolioData';
 import { useTheme } from '@/hooks/useTheme';
 import { useMobile } from '@/hooks/useMobile';
@@ -209,11 +209,11 @@ export default function ProjectsPage() {
               const idx = projects.indexOf(p);
               return (
                 <div key={p.id} onClick={() => selectFeatured(idx)} style={{ cursor: 'pointer', background: 'var(--card)', border: isFeatured ? `2px solid ${accent}` : '2px solid var(--border)', borderRadius: 14, overflow: 'hidden', boxShadow: isFeatured ? `0 6px 0 ${accent}44` : '0 6px 0 var(--shadow)' }}>
-                  <div style={{ position: 'relative', height: 158, background: coverBg(p.cover), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ position: 'relative', height: 158, background: slide0Bg(p.slides, p.cover), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(0deg,rgba(0,0,0,0.07) 0 2px,transparent 2px 5px)', pointerEvents: 'none' }} />
                     {isFeatured && <div style={{ position: 'absolute', top: 10, left: 10, background: '#FFDA14', color: '#111827', fontSize: 9, fontWeight: 800, letterSpacing: 1.5, textTransform: 'uppercase', padding: '4px 10px', borderRadius: 999, border: '1.5px solid #111827', zIndex: 2 }}>★ FEATURED</div>}
                     <span style={{ position: 'absolute', top: 10, right: 10, background: 'rgba(0,0,0,0.55)', color: '#EEF0FF', fontSize: 9, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '3px 9px', borderRadius: 999, zIndex: 2 }}>{p.tag}</span>
-                    <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: 2, color: coverInk(p.cover), textTransform: 'uppercase', zIndex: 1, position: 'relative' }}>{p.n}</span>
+                    {!p.slides?.length && <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: 2, color: coverInk(p.cover), textTransform: 'uppercase', zIndex: 1, position: 'relative' }}>{p.n}</span>}
                   </div>
                   <div style={{ padding: '14px 16px 16px' }}>
                     <h3 style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 18, margin: '0 0 3px', color: 'var(--card-ink)', textTransform: 'uppercase', letterSpacing: 0.5 }}>{p.title}</h3>

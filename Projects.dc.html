@@ -127,7 +127,9 @@
                 <div style="position:absolute; top:10px; left:10px; background:#FFDA14; color:#111827; font-size:9px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:999px; border:1.5px solid #111827; z-index:2;">★ FEATURED</div>
               </sc-if>
               <span style="position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.55); color:#EEF0FF; font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:3px 9px; border-radius:999px; z-index:2;">{{ p.tag }}</span>
-              <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:20px; letter-spacing:2px; color:{{ p.coverLabel }}; text-transform:uppercase; z-index:1; position:relative;">{{ p.n }}</span>
+              <sc-if value="{{ p.showLabel }}" hint-placeholder-val="{{ false }}">
+                <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:20px; letter-spacing:2px; color:{{ p.coverLabel }}; text-transform:uppercase; z-index:1; position:relative;">{{ p.n }}</span>
+              </sc-if>
             </div>
             <div style="padding:14px 16px 16px;">
               <h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; margin:0 0 3px; color:#EEF0FF; text-transform:uppercase; letter-spacing:0.5px;">{{ p.title }}</h3>
@@ -264,11 +266,12 @@ class Component extends DCLogic {
         return {
           title: p.title,
           genre: p.genre,
-          n: p.n,
           tag: p.tag,
           stack: p.engine,
           year: p.year,
-          coverBg: cBg(p.cover),
+          coverBg: (p.slides && p.slides.length) ? grad((p.slides[0] && p.slides[0].grad) || p.cover) : cBg(p.cover),
+          showLabel: !(p.slides && p.slides.length),
+          n: p.n,
           coverLabel: cInk(p.cover),
           isFeatured,
           borderStyle: isFeatured ? '2px solid #FFDA14' : '2px solid #181C34',

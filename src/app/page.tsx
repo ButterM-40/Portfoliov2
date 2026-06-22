@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { grad, coverBg, coverInk } from '@/data/portfolio';
+import { grad, coverBg, coverInk, slide0Bg } from '@/data/portfolio';
 import { usePortfolioData } from '@/hooks/usePortfolioData';
 import { useTheme } from '@/hooks/useTheme';
 import { useMobile } from '@/hooks/useMobile';
@@ -214,8 +214,8 @@ export default function HomePage() {
           <div className="reveal" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: 18 }}>
             {displayedGames.map(g => (
               <div key={g.id} style={{ background: 'var(--card)', border: '2px solid var(--border)', borderRadius: 14, padding: 12, boxShadow: '8px 8px 0 var(--shadow)' }}>
-                <div style={{ height: 140, border: '2px solid var(--border)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', background: coverBg(g.cover) }}>
-                  <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: 2, color: coverInk(g.cover), textTransform: 'uppercase' }}>{g.n}</span>
+                <div style={{ height: 140, border: '2px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: slide0Bg(g.slides, g.cover), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {!g.slides?.length && <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: 2, color: coverInk(g.cover), textTransform: 'uppercase' }}>{g.n}</span>}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '14px 6px 6px' }}>
                   <div>
@@ -244,9 +244,9 @@ export default function HomePage() {
           <div className="reveal" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: 18 }}>
             {displayedProjects.map(p => (
               <div key={p.id} style={{ background: 'var(--card)', border: '2px solid var(--border)', borderRadius: 14, padding: 12, boxShadow: '8px 8px 0 var(--shadow)' }}>
-                <div style={{ position: 'relative', height: 140, border: '2px solid var(--border)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', background: coverBg(p.cover) }}>
+                <div style={{ position: 'relative', height: 140, border: '2px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: slide0Bg(p.slides, p.cover), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(17,24,39,0.55)', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 9px', borderRadius: 999 }}>{p.tag}</span>
-                  <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: 2, color: coverInk(p.cover), textTransform: 'uppercase' }}>{p.n}</span>
+                  {!p.slides?.length && <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: 2, color: coverInk(p.cover), textTransform: 'uppercase' }}>{p.n}</span>}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '14px 6px 6px' }}>
                   <div>

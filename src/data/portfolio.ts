@@ -26,6 +26,33 @@ export function coverBg(key: string) {
   return `radial-gradient(${d.dot} 1.2px, transparent 1.6px) 0 0 / 11px 11px, ${d.grad}`;
 }
 
+type Slide = { grad: string; image?: string; youtube?: string };
+
+function youtubeId(url: string): string | null {
+  const m = url.match(/[?&]v=([^&]+)/);
+  return m?.[1] ?? null;
+}
+
+export function slide0Bg(
+  slides: Slide[] | undefined,
+  fallbackCover: string
+): string {
+  if (!slides?.length) return coverBg(fallbackCover);
+  const s = slides[0];
+  if (s.youtube) {
+    const id = youtubeId(s.youtube);
+    if (id) return `url(https://img.youtube.com/vi/${id}/hqdefault.jpg) center / cover no-repeat`;
+  }
+  if (s.image) return `url(${s.image}) center / cover no-repeat`;
+  return coverBg(s.grad);
+}
+
+export function slide0HasMedia(slides: Slide[] | undefined): boolean {
+  if (!slides?.length) return false;
+  const s = slides[0];
+  return !!(s.youtube || s.image);
+}
+
 export const brand = { name: 'Butter', accentWord: '.dev' };
 
 export const heroData = {

@@ -146,7 +146,11 @@
       <div data-reveal style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
         <sc-for list="{{ games }}" as="g" hint-placeholder-count="6">
           <div style="background:var(--card); border:2px solid var(--border); border-radius:14px; padding:12px; box-shadow:8px 8px 0 var(--shadow); transition:transform .12s, box-shadow .12s;" style-hover="transform:translate(-2px,-2px); box-shadow:10px 10px 0 var(--shadow);">
-            <div style="height:150px; border:2px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; background:{{ g.coverBg }};"><span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; letter-spacing:2px; color:{{ g.label }}; text-transform:uppercase;">{{ g.n }}</span></div>
+            <div style="height:150px; border:2px solid var(--border); border-radius:8px; overflow:hidden; background:{{ g.coverBg }}; display:flex; align-items:center; justify-content:center;">
+              <sc-if value="{{ g.showLabel }}" hint-placeholder-val="{{ false }}">
+                <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; letter-spacing:2px; color:{{ g.label }}; text-transform:uppercase;">{{ g.n }}</span>
+              </sc-if>
+            </div>
             <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 6px 6px;">
               <div><h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; margin:0; text-transform:uppercase; color:var(--card-ink);">{{ g.title }}</h3><span style="font-size:12px; color:var(--card-soft);">{{ g.genre }}</span></div>
               <button onClick="{{ g.onLaunch }}" title="View game" style="width:44px; height:44px; flex:none; border-radius:50%; background:{{ accent }}; border:2px solid #111827; display:flex; align-items:center; justify-content:center; font-size:15px; box-shadow:0 4px 0 #111827; cursor:pointer; padding:0; transition:transform .08s, box-shadow .08s;" style-hover="filter:brightness(1.05);" style-active="transform:translateY(4px); box-shadow:0 0 0 #111827;">▶</button>
@@ -168,9 +172,11 @@
       <div data-reveal style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
         <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
           <div style="background:var(--card); border:2px solid var(--border); border-radius:14px; padding:12px; box-shadow:8px 8px 0 var(--shadow); transition:transform .12s, box-shadow .12s;" style-hover="transform:translate(-2px,-2px); box-shadow:10px 10px 0 var(--shadow);">
-            <div style="position:relative; height:150px; border:2px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; background:{{ p.coverBg }};">
+            <div style="position:relative; height:150px; border:2px solid var(--border); border-radius:8px; overflow:hidden; background:{{ p.coverBg }}; display:flex; align-items:center; justify-content:center;">
               <span style="position:absolute; top:10px; left:10px; background:rgba(17,24,39,0.55); color:#fff; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 9px; border-radius:999px;">{{ p.tag }}</span>
-              <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; letter-spacing:2px; color:{{ p.label }}; text-transform:uppercase;">{{ p.n }}</span>
+              <sc-if value="{{ p.showLabel }}" hint-placeholder-val="{{ false }}">
+                <span style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; letter-spacing:2px; color:{{ p.label }}; text-transform:uppercase;">{{ p.n }}</span>
+              </sc-if>
             </div>
             <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 6px 6px;">
               <div><h3 style="font-family:'Fredoka',sans-serif; font-weight:700; font-size:19px; margin:0; text-transform:uppercase; color:var(--card-ink);">{{ p.title }}</h3><span style="font-size:12px; color:var(--card-soft);">{{ p.genre }}</span></div>
@@ -614,16 +620,34 @@ class Component extends DCLogic {
       onMute: () => this.toggleMute(),
       onClose: () => this.close(),
       targets: s.targets.map(t => ({ ...t, onClick: () => this.hit(t.id) })),
-      games: (d.games || []).map((it, i) => ({
-        title: it.title, genre: it.genre, n: it.n,
-        label: coverInk(it.cover), coverBg: coverBg(it.cover),
-        onLaunch: () => this.launch('game', i),
-      })),
-      projects: (d.projects || []).map((it, i) => ({
-        title: it.title, genre: it.genre, tag: it.tag, n: it.n,
-        label: coverInk(it.cover), coverBg: coverBg(it.cover),
-        onLaunch: () => this.launch('project', i),
-      })),
+      games: (d.games || []).map((it, i) => {
+        const hasSlides = !!(it.slides && it.slides.length);
+        const s0 = hasSlides ? it.slides[0] : null;
+        return {
+          title: it.title, genre: it.genre,
+          coverBg: hasSlides
+            ? 'radial-gradient(rgba(255,255,255,0.16) 1.2px,transparent 1.6px) 0 0/13px 13px,' + grad((s0 && s0.grad) || it.cover)
+            : coverBg(it.cover),
+          showLabel: !hasSlides,
+          n: it.n,
+          label: coverInk(it.cover),
+          onLaunch: () => this.launch('game', i),
+        };
+      }),
+      projects: (d.projects || []).map((it, i) => {
+        const hasSlides = !!(it.slides && it.slides.length);
+        const s0 = hasSlides ? it.slides[0] : null;
+        return {
+          title: it.title, genre: it.genre, tag: it.tag,
+          coverBg: hasSlides
+            ? 'radial-gradient(rgba(255,255,255,0.16) 1.2px,transparent 1.6px) 0 0/13px 13px,' + grad((s0 && s0.grad) || it.cover)
+            : coverBg(it.cover),
+          showLabel: !hasSlides,
+          n: it.n,
+          label: coverInk(it.cover),
+          onLaunch: () => this.launch('project', i),
+        };
+      }),
     };
   }
 }

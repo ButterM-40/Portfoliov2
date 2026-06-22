@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { grad, coverBg, coverInk } from '@/data/portfolio';
+import { grad, coverBg, coverInk, slide0Bg } from '@/data/portfolio';
 import { usePortfolioData } from '@/hooks/usePortfolioData';
 import { useTheme } from '@/hooks/useTheme';
 import { useMobile } from '@/hooks/useMobile';
@@ -208,10 +208,10 @@ export default function GamesPage() {
               const idx = games.indexOf(g);
               return (
                 <div key={g.id} onClick={() => selectFeatured(idx)} style={{ cursor: 'pointer', background: 'var(--card)', border: isFeatured ? `2px solid ${accent}` : '2px solid var(--border)', borderRadius: 14, overflow: 'hidden', boxShadow: isFeatured ? `0 6px 0 ${accent}44` : '0 6px 0 var(--shadow)' }}>
-                  <div style={{ position: 'relative', height: 158, background: coverBg(g.cover), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ position: 'relative', height: 158, background: slide0Bg(g.slides, g.cover), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(0deg,rgba(0,0,0,0.07) 0 2px,transparent 2px 5px)', pointerEvents: 'none' }} />
                     {isFeatured && <div style={{ position: 'absolute', top: 10, left: 10, background: '#FFDA14', color: '#111827', fontSize: 9, fontWeight: 800, letterSpacing: 1.5, textTransform: 'uppercase', padding: '4px 10px', borderRadius: 999, border: '1.5px solid #111827', zIndex: 2 }}>▶ NOW PLAYING</div>}
-                    <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: 2, color: coverInk(g.cover), textTransform: 'uppercase', zIndex: 1, position: 'relative' }}>{g.n}</span>
+                    {!g.slides?.length && <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: 2, color: coverInk(g.cover), textTransform: 'uppercase', zIndex: 1, position: 'relative' }}>{g.n}</span>}
                   </div>
                   <div style={{ padding: '14px 16px 16px' }}>
                     <h3 style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 18, margin: '0 0 3px', color: 'var(--card-ink)', textTransform: 'uppercase', letterSpacing: 0.5 }}>{g.title}</h3>
