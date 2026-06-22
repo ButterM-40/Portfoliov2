@@ -26,33 +26,6 @@ export function coverBg(key: string) {
   return `radial-gradient(${d.dot} 1.2px, transparent 1.6px) 0 0 / 11px 11px, ${d.grad}`;
 }
 
-type Slide = { grad: string; image?: string; youtube?: string };
-
-function youtubeId(url: string): string | null {
-  const m = url.match(/[?&]v=([^&]+)/);
-  return m?.[1] ?? null;
-}
-
-export function slide0Bg(
-  slides: Slide[] | undefined,
-  fallbackCover: string
-): string {
-  if (!slides?.length) return coverBg(fallbackCover);
-  const s = slides[0];
-  if (s.youtube) {
-    const id = youtubeId(s.youtube);
-    if (id) return `url(https://img.youtube.com/vi/${id}/hqdefault.jpg) center / cover no-repeat`;
-  }
-  if (s.image) return `url(${s.image}) center / cover no-repeat`;
-  return coverBg(s.grad);
-}
-
-export function slide0HasMedia(slides: Slide[] | undefined): boolean {
-  if (!slides?.length) return false;
-  const s = slides[0];
-  return !!(s.youtube || s.image);
-}
-
 export const brand = { name: 'Butter', accentWord: '.dev' };
 
 export const heroData = {
@@ -71,25 +44,25 @@ export const stats = [
 export const games = [
   { id: 'g1781758275292', n: 'Game 4', title: 'Mutant Arena', genre: 'Fighting', cover: 'violet',
     role: 'Lead Programmer', engine: 'Godot', year: '2026',
-    repo: 'https://github.com/ButterM-40/Game-Jam-94', link: '#',
-    desc: 'Collaborated with a 3-person team to build a mutant-themed fighting game in Godot using the Castagne framework. Contributed to game planning, progress coordination, and connecting the lead artist\'s artwork with the codebase.',
-    roleDesc: 'Meow Meow',
+    repo: 'https://github.com/ButterM-40/Game-Jam-94', link: 'https://butterman40.itch.io/mutant-arena',
+    desc: '',
+    roleDesc: 'Collaborated with a 3-person team to build a mutant-themed fighting game in Godot using the Castagne framework. Contributed to game planning, progress coordination, and connecting the lead artist\'s artwork with the codebase. Accomplished this in 9 days.',
     tech: [],
-    slides: [{ label: 'Screen 1', grad: 'violet', image: '' }] },
+    slides: [{ label: 'Concept Art', grad: 'violet', image: '' }, { label: 'Mutant Arena Video', grad: 'violet', image: '', youtube: 'https://youtu.be/ugR1BdQ41aY' }] },
   { id: 'g1', n: 'Game 1', title: 'Half Hazard', genre: 'Horror / Puzzle', cover: 'violet',
     role: 'Programmer', engine: 'Godot', year: '2025',
     repo: 'https://github.com/ramiro/crypto-knights', link: 'https://t33-h33-studio.itch.io/half-hazard',
     desc: 'Developed a horror survival game in 48 hours at the Chillennium 2025 Game Jam hosted by Texas A&M University. Implemented core systems including dialogue, an interactive map, and puzzle mechanics.',
     roleDesc: '',
     tech: ['Godot'],
-    slides: [{ label: 'Dungeon Raid', grad: 'violet', image: '', youtube: 'https://www.youtube.com/watch?v=xBPetsN8w90&source_ve_path=OTY3MTQ&embeds_referring_euri=https%3A%2F%2Ft33-h33-studio.itch.io%2Fhalf-hazard' }, { label: 'Party Loadout', grad: 'indigo', image: '' }, { label: 'Boss Encounter', grad: 'dark', image: '' }] },
+    slides: [{ label: 'Dungeon Raid', grad: 'violet', image: '', youtube: 'https://www.youtube.com/watch?v=xBPetsN8w90&source_ve_path=OTY3MTQ&embeds_referring_euri=https%3A%2F%2Ft33-h33-studio.itch.io%2Fhalf-hazard' }, { label: 'New screen', grad: 'violet', image: '' }] },
   { id: 'g2', n: 'Game 2', title: 'Spirits of the Wind', genre: 'Puzzle / Platform', cover: 'lavender',
     role: 'Lead Programmer', engine: 'Godot', year: '2024',
     repo: 'https://github.com/ButterM-40/BlitzWaveStudioGameJam70', link: 'https://blitzwavesstudios.itch.io/spirits-of-the-wild',
     desc: 'Led a 6-person team to design and ship a puzzle game in one week for Godot Wild Jam 84. Contributed systems such as UI design, map development, a character swap mechanic, and coordinating with the team.',
     roleDesc: '',
     tech: ['Godot'],
-    slides: [{ label: 'Time Trial', grad: 'lavender', image: '' }, { label: 'Track Editor', grad: 'pink', image: '' }, { label: 'Ghost Replay', grad: 'violet', image: '' }] },
+    slides: [{ label: 'Time Trial', grad: 'lavender', image: '' }, { label: 'Track Editor', grad: 'pink', image: '' }, { label: 'Ghost Replay', grad: 'violet', image: '' }, { label: 'New screen', grad: 'lavender', image: '' }, { label: 'New screen', grad: 'lavender', image: '' }] },
   { id: 'g3', n: 'Game 3', title: 'Sole Survivor', genre: 'Arcade ', cover: 'aqua',
     role: 'Lead Programmer', engine: 'Unity', year: '2023',
     repo: 'https://github.com/ButterM-40/202320-final-game-immortal-players-only', link: '#',
