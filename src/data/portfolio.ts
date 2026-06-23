@@ -118,8 +118,8 @@ export const experience = [
   { period: '2026 — Now', title: 'Adjunct Computer Science ', org: 'South Texas College', desc: 'Teaching Computer Science courses at the college level, bringing real-world research and industry experience into the classroom to help students build a strong foundation in CS fundamentals.' },
   { period: '2024 — 2026', title: 'Graduate Researcher', org: 'ASARG', desc: 'Conducting theoretical research in molecular computing, exploring Chemical Reaction Networks, Tile Assembly Models, and computational complexity at the nanoscale. Working at the intersection of mathematics, biology, and computer science.' },
   { period: '2024 — 2026', title: 'Lecturer', org: 'University of Texas Rio Grande Valley', desc: 'Teaching Introduction to Computer Science across multiple sections, covering topics from Boolean logic and web technologies to AI and game development. Focused on making foundational CS concepts accessible to students of all backgrounds.' },
-  { period: '2022 — 2023', title: 'Undergraduate Teacher Assistant', org: 'University of Texas Rio Grande Valley', desc: 'Supported student success through grading, office hours, and one-on-one guidance. Helped create an encouraging learning environment where students could confidently engage with course material.' },
   { period: '2024 — 2025', title: 'Frontend Web Developer', org: 'MVSSIVE', desc: 'Built and maintained full stack web features using TypeScript and Dockerized microservices, from audio/image processing tools to secure backend APIs. Collaborated with cross-functional teams to ship scalable, production-ready applications.' },
+  { period: '2022 — 2023', title: 'Undergraduate Teacher Assistant', org: 'University of Texas Rio Grande Valley', desc: 'Supported student success through grading, office hours, and one-on-one guidance. Helped create an encouraging learning environment where students could confidently engage with course material.' },
 ];
 
 export const education = [
@@ -137,7 +137,7 @@ export const research = [
 ];
 
 export const about = {
-  image: '',
+  image: '/images/about.jpg',
   heading: 'Hi, I\'m Ramiro.',
   bio: 'A solo developer who ships games end to end — from the gameplay loop and engine work to art direction, audio, and release. I care about systems that are deep but feel effortless, and I sweat the final 10% that makes a game sing.',
   lookingForTitle: 'What I\'m looking for',

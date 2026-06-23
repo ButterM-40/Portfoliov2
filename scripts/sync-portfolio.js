@@ -142,7 +142,7 @@ ${(d.research || []).map(r =>
 ];
 
 export const about = {
-  image: '',
+  image: ${q((d.about?.image || '').startsWith('data:') ? '' : (d.about?.image || ''))},
   heading: ${q(d.about?.heading)},
   bio: ${q(d.about?.bio)},
   lookingForTitle: ${q(d.about?.lookingForTitle)},
