@@ -92,7 +92,7 @@ export function slide0Bg(slides: Slide[] | undefined, fallbackCover: string): st
     const id = youtubeId(s.youtube);
     if (id) return \`url(https://img.youtube.com/vi/\${id}/hqdefault.jpg) center / cover no-repeat\`;
   }
-  if (s.image) return \`url(\${s.image}) center / cover no-repeat\`;
+  if (s.image) return \`url(\${encodeURI(s.image)}) center / cover no-repeat\`;
   return coverBg(s.grad);
 }
 

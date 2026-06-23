@@ -40,7 +40,7 @@ export function slide0Bg(slides: Slide[] | undefined, fallbackCover: string): st
     const id = youtubeId(s.youtube);
     if (id) return `url(https://img.youtube.com/vi/${id}/hqdefault.jpg) center / cover no-repeat`;
   }
-  if (s.image) return `url(${s.image}) center / cover no-repeat`;
+  if (s.image) return `url(${encodeURI(s.image)}) center / cover no-repeat`;
   return coverBg(s.grad);
 }
 
@@ -49,7 +49,7 @@ export const brand = { name: 'Butter', accentWord: '.dev' };
 export const heroData = {
   kicker: 'Ramiro Santos · Developer',
   headline: 'Games that feel good to play.',
-  subhead: 'I design and build original games end to end — engine, gameplay, and the last 10% of polish. I turn hard systems into tight, joyful play.',
+  subhead: 'Developer who makes games. From the first mechanic to the last bug fix.',
 };
 
 export const stats = [
@@ -66,22 +66,22 @@ export const games = [
     desc: '',
     roleDesc: 'Collaborated with a 3-person team to build a mutant-themed fighting game in Godot using the Castagne framework. Contributed to game planning, progress coordination, and connecting the lead artist\'s artwork with the codebase. Accomplished this in 9 days.',
     tech: [],
-    slides: [{ label: 'Concept Art', grad: 'violet', image: '' }, { label: 'Mutant Arena Video', grad: 'violet', image: '', youtube: 'https://youtu.be/ugR1BdQ41aY' }] },
+    slides: [{ label: 'Concept Art', grad: 'violet', image: '/images/artwork1.jpg' }, { label: 'Mutant Arena Video', grad: 'violet', image: '', youtube: 'https://youtu.be/ugR1BdQ41aY' }] },
   { id: 'g1', n: 'Game 1', title: 'Half Hazard', genre: 'Horror / Puzzle', cover: 'violet',
     role: 'Programmer', engine: 'Godot', year: '2025',
     repo: 'https://github.com/ramiro/crypto-knights', link: 'https://t33-h33-studio.itch.io/half-hazard',
     desc: 'Developed a horror survival game in 48 hours at the Chillennium 2025 Game Jam hosted by Texas A&M University. Implemented core systems including dialogue, an interactive map, and puzzle mechanics.',
     roleDesc: '',
     tech: ['Godot'],
-    slides: [{ label: 'Logo', grad: 'violet', image: '' }, { label: 'Logo', grad: 'violet', image: '', youtube: 'https://www.youtube.com/watch?v=xBPetsN8w90&source_ve_path=OTY3MTQ&embeds_referring_euri=https%3A%2F%2Ft33-h33-studio.itch.io%2Fhalf-hazard' }] },
+    slides: [{ label: 'Logo', grad: 'violet', image: '/images/zXDARO.png' }, { label: 'Logo', grad: 'violet', image: '', youtube: 'https://www.youtube.com/watch?v=xBPetsN8w90&source_ve_path=OTY3MTQ&embeds_referring_euri=https%3A%2F%2Ft33-h33-studio.itch.io%2Fhalf-hazard' }] },
   { id: 'g2', n: 'Game 2', title: 'Spirits of the Wind', genre: 'Puzzle / Platform', cover: 'lavender',
     role: 'Lead Programmer', engine: 'Godot', year: '2024',
     repo: 'https://github.com/ButterM-40/BlitzWaveStudioGameJam70', link: 'https://blitzwavesstudios.itch.io/spirits-of-the-wild',
     desc: 'A puzzle platformer inspired by Native American culture. Made for the Godot WildJam 70. You wake up and you and several others are all trapped in one body. When you and the others in your body die you turn into Totems and start at the begining of the puzzle. You all have angered a spirit in some way and now it wants revenge.',
     roleDesc: 'Led a 6-person team to design and ship a puzzle game in one week for Godot Wild Jam 84. Contributed systems such as UI design, map development, a character swap mechanic, and coordinating with the team.',
     tech: ['Godot'],
-    slides: [{ label: 'Main Scene', grad: 'lavender', image: '' }, { label: 'Gameplay', grad: 'lavender', image: '' }] },
-  { id: 'g3', n: 'Game 1', title: 'Sole Survivor', genre: 'Arcade ', cover: 'aqua',
+    slides: [{ label: 'Main Scene', grad: 'lavender', image: '/images/Screenshot 2026-06-21 220127.png' }, { label: 'Gameplay', grad: 'lavender', image: '/images/Screenshot 2026-06-21 220230.png' }] },
+  { id: 'g3', n: 'Sole Survivor', title: 'Sole Survivor', genre: 'Arcade ', cover: 'aqua',
     role: 'Lead Programmer', engine: 'Unity', year: '2023',
     repo: 'https://github.com/ButterM-40/202320-final-game-immortal-players-only', link: '#',
     desc: 'A Sole Survivor in a world overunned by Vampires, your goal is to survive! \nEnjoy this Vampire Survivors, and try to reach the highscore.',
@@ -91,79 +91,49 @@ export const games = [
 ];
 
 export const projects = [
-  { id: 'p1', n: 'Project 1', title: 'Realtime Analytics', genre: 'Web App / Dashboard', tag: 'Web App', cover: 'indigo',
-    role: 'Full-Stack', engine: 'Next.js', year: '2024',
-    repo: 'https://github.com/ramiro/realtime-analytics', link: 'https://example.com/analytics',
-    desc: 'A realtime analytics dashboard streaming millions of events a day. Live charts, alerting and a query builder over a websocket data layer.',
-    roleDesc: '',
-    tech: ['React', 'Next.js', 'WebSocket', 'D3'],
-    slides: [{ label: 'Live Dashboard', grad: 'indigo', image: '' }, { label: 'Query Builder', grad: 'aqua', image: '' }, { label: 'Alerting', grad: 'dark', image: '' }] },
-  { id: 'p2', n: 'Project 2', title: 'Inventory API', genre: 'API / Platform', tag: 'API', cover: 'green',
-    role: 'Backend', engine: 'FastAPI', year: '2023',
-    repo: 'https://github.com/ramiro/inventory-api', link: 'https://example.com/inventory',
-    desc: 'A multi-tenant inventory platform with a typed REST + GraphQL API, role-based access, and a Redis-backed cache serving sub-50ms reads.',
-    roleDesc: '',
-    tech: ['FastAPI', 'PostgreSQL', 'Redis', 'Docker'],
-    slides: [{ label: 'API Explorer', grad: 'green', image: '' }, { label: 'Schema Docs', grad: 'amber', image: '' }, { label: 'Dashboards', grad: 'teal', image: '' }] },
-  { id: 'p3', n: 'Project 3', title: 'Doc-Summarizer AI', genre: 'AI Tool', tag: 'AI', cover: 'pink',
-    role: 'ML Engineer', engine: 'Python', year: '2024',
-    repo: 'https://github.com/ramiro/doc-summarizer', link: 'https://example.com/summarize',
-    desc: 'An AI tool that ingests long documents and returns structured, cited summaries. Retrieval-augmented over a vector store with streaming output.',
-    roleDesc: '',
-    tech: ['Python', 'LLM', 'Vector DB', 'FastAPI'],
-    slides: [{ label: 'Upload & Parse', grad: 'pink', image: '' }, { label: 'Cited Summary', grad: 'purple', image: '' }, { label: 'Vector Search', grad: 'violet', image: '' }] },
-  { id: 'p4', n: 'Project 4', title: 'DevPortfolio CMS', genre: 'Web App / Tooling', tag: 'Web App', cover: 'teal',
-    role: 'Full-Stack', engine: 'Sanity', year: '2023',
-    repo: 'https://github.com/ramiro/devportfolio-cms', link: 'https://example.com/cms',
-    desc: 'A headless CMS and theme system that powers developer portfolios. Authors edit content live and preview across multiple themes instantly.',
-    roleDesc: '',
-    tech: ['Next.js', 'Sanity', 'TypeScript'],
-    slides: [{ label: 'Live Editor', grad: 'teal', image: '' }, { label: 'Theme Switch', grad: 'indigo', image: '' }, { label: 'Preview', grad: 'dark', image: '' }] },
-  { id: 'p5', n: 'Project 5', title: 'Match Scheduler Bot', genre: 'Automation', tag: 'Bot', cover: 'orange',
-    role: 'Backend', engine: 'Node.js', year: '2022',
-    repo: 'https://github.com/ramiro/match-scheduler', link: 'https://example.com/scheduler',
-    desc: 'A Discord bot that organizes community tournaments end to end — sign-ups, bracket generation, match reminders and live result tracking.',
-    roleDesc: '',
-    tech: ['Node.js', 'Discord API', 'SQLite'],
-    slides: [{ label: 'Bracket View', grad: 'orange', image: '' }, { label: 'Sign-ups', grad: 'amber', image: '' }, { label: 'Reminders', grad: 'dark', image: '' }] },
-  { id: 'p6', n: 'Project 6', title: 'Shader Playground', genre: 'Creative / WebGL', tag: 'Creative', cover: 'purple',
-    role: 'Solo Dev', engine: 'WebGL', year: '2025',
-    repo: 'https://github.com/ramiro/shader-playground', link: 'https://example.com/shaders',
-    desc: 'A browser playground for writing and sharing fragment shaders with live hot-reload, a uniform inspector, and one-click GIF capture.',
-    roleDesc: '',
-    tech: ['TypeScript', 'WebGL', 'GLSL'],
-    slides: [{ label: 'Live Shader', grad: 'purple', image: '' }, { label: 'Uniform Inspector', grad: 'aqua', image: '' }, { label: 'GIF Capture', grad: 'violet', image: '' }] },
-  { id: 'p1781810008267', n: 'Project 7', title: 'New Project', genre: 'Web App', tag: 'New', cover: 'indigo',
-    role: 'Full-Stack', engine: '', year: '2025',
-    repo: '', link: '#',
-    desc: '',
-    roleDesc: '',
-    tech: [],
-    slides: [{ label: 'Screen 1', grad: 'indigo', image: '' }] },
+  { id: 'p1', n: 'Project 1', title: 'Tumbile Tiles Web', genre: 'Web App', tag: 'Web App', cover: 'indigo',
+    role: 'Web Developer', engine: 'Javscript', year: '2024',
+    repo: 'https://github.com/ButterM-40/TumbleTiles', link: 'https://github.com/ButterM-40/TumbleTiles',
+    desc: 'Implements the tumble tile model as designed by Robert Schweller and Tim Wylie. This project was done for the Algorithmic Self-Assembly Research Group (ASARG) at the University of Texas - Rio Grande Valley.',
+    roleDesc: 'Web Version is available and will not be maintained by me',
+    tech: ['HTML', 'CSS', 'Javscript'],
+    slides: [{ label: 'Live Dashboard', grad: 'indigo', image: '' }] },
+  { id: 'p1782235220846', n: 'Project 2', title: 'Communicative NPC', genre: 'AI NPC', tag: 'New', cover: 'indigo',
+    role: 'Full-Stack', engine: 'Unity', year: '2023',
+    repo: 'https://github.com/ButterM-40/Dungeon-Game-3D', link: '#',
+    desc: 'Developed a 3D RPG featuring custom spawners and a climactic boss room. The boss enemy leverages a dual-LLM architecture to dynamically decide actions and dialogue based on its current mood state. Integrated ElevenLabs for real-time voice synthesis, enabling fully voiced NPC responses. Built a voice-to-voice pipeline where players speak to the boss and receive spoken replies creating an immersive, AI-driven combat experience.',
+    roleDesc: 'Led LLM architecture design and API integration (ElevenLabs + LLM pipeline), including voice input capture and NPC voice response.',
+    tech: ['ElevenLab', 'LLM', 'C#'],
+    slides: [{ label: 'Screen 1', grad: 'indigo', image: '', youtube: 'https://www.youtube.com/watch?v=W_adTM71V2w' }] },
 ];
 
 export const skills = [
   { title: 'Engines', color: '#14B8A6', chips: ['Unity', 'Unreal', 'Godot', 'Bevy'] },
-  { title: 'Languages', color: '#D97706', chips: ['C#', 'C++', 'GDScript', 'Rust', 'TypeScript'] },
+  { title: 'Languages', color: '#D97706', chips: ['C#', 'C++', 'GDScript', 'Rust', 'TypeScript', 'Python'] },
   { title: 'Art & Audio', color: '#EC4899', chips: ['Shaders', 'Blender', 'Aseprite', 'FMOD'] },
   { title: 'Backend & Ops', color: '#8B5CF6', chips: ['Node.js', 'Photon', 'PostgreSQL', 'Docker', 'CI/CD'] },
 ];
 
 export const experience = [
-  { period: '2026 — Now', title: 'Adjunct Computer Science ', org: 'South Texas College', desc: 'Designing and shipping original games end to end — six titles released across PC and web, from engine work to art, audio and release.' },
-  { period: '2024 — 2026', title: 'Graduate Researcher', org: 'ASARG', desc: 'Built realtime web platforms and internal tools, and led a small frontend team shipping weekly to production.' },
-  { period: '2024 — 2026', title: 'Lecturer', org: 'University of Texas Rio Grande Valley', desc: 'Shipped API features and developer tooling for a data analytics product used by enterprise teams.' },
-  { period: '2022 — 2023', title: 'Undergraduate Teacher Assistant', org: 'University of Texas Rio Grande Valley', desc: '' },
-  { period: '2024 — 2025', title: 'Frontend Web Developer', org: 'MVSSIVE', desc: '' },
+  { period: '2026 — Now', title: 'Adjunct Computer Science ', org: 'South Texas College', desc: 'Teaching Computer Science courses at the college level, bringing real-world research and industry experience into the classroom to help students build a strong foundation in CS fundamentals.' },
+  { period: '2024 — 2026', title: 'Graduate Researcher', org: 'ASARG', desc: 'Conducting theoretical research in molecular computing, exploring Chemical Reaction Networks, Tile Assembly Models, and computational complexity at the nanoscale. Working at the intersection of mathematics, biology, and computer science.' },
+  { period: '2024 — 2026', title: 'Lecturer', org: 'University of Texas Rio Grande Valley', desc: 'Teaching Introduction to Computer Science across multiple sections, covering topics from Boolean logic and web technologies to AI and game development. Focused on making foundational CS concepts accessible to students of all backgrounds.' },
+  { period: '2022 — 2023', title: 'Undergraduate Teacher Assistant', org: 'University of Texas Rio Grande Valley', desc: 'Supported student success through grading, office hours, and one-on-one guidance. Helped create an encouraging learning environment where students could confidently engage with course material.' },
+  { period: '2024 — 2025', title: 'Frontend Web Developer', org: 'MVSSIVE', desc: 'Built and maintained full stack web features using TypeScript and Dockerized microservices, from audio/image processing tools to secure backend APIs. Collaborated with cross-functional teams to ship scalable, production-ready applications.' },
 ];
 
 export const education = [
-  { period: '2024 — 2026', title: 'M.A. Computer Science', org: 'University of Texas Rio Grande Valley', desc: 'Intensive on engine architecture, gameplay programming and shipping a vertical slice to production.' },
-  { period: '2021 — 2023', title: 'B.S. Computer Science', org: 'University of Texas Rio Grande Valley', desc: 'Focus on graphics, systems and AI. Published three papers during undergrad research.' },
+  { period: '2024 — 2026', title: 'M.A. Computer Science', org: 'University of Texas Rio Grande Valley', desc: '' },
+  { period: '2021 — 2023', title: 'B.S. Computer Science', org: 'University of Texas Rio Grande Valley', desc: '' },
 ];
 
 export const research = [
-  { venue: 'Venue · 2025', title: 'New paper', desc: '', href: '#' },
+  { venue: 'SWAT · 2026', title: 'Reachability with Restricted Reactions in Inhibitory Chemical Reaction Networks', desc: '', href: '#' },
+  { venue: 'Master Thesis 2026', title: 'Exploration of Extended Chemical Reaction Networks', desc: '', href: '#' },
+  { venue: 'ISAAC · 2025', title: 'Polynomial equivalence of extended chemical reaction models', desc: '', href: 'https://arxiv.org/pdf/2509.15584' },
+  { venue: 'SAND · 2025', title: 'Fractals in Seeded Tile Automata', desc: '', href: 'https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.SAND.2025.14' },
+  { venue: 'IWOCA  · 2025', title: 'Tile-Based Knot Assembly with Celtic!', desc: '', href: 'https://link.springer.com/chapter/10.1007/978-3-031-98740-3_23' },
+  { venue: 'Hackresearch · 2024', title: 'Kirby\'s Adventure into PSPACE', desc: '', href: 'https://utrgv.hackresearch.com/site/wp-content/uploads/2024/01/HackR23.pdf#page=44' },
 ];
 
 export const about = {
