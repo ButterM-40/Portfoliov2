@@ -61,6 +61,52 @@ function GradSelect({ value, onChange }: { value: string; onChange: (v: string) 
   );
 }
 
+// ─── image picker ─────────────────────────────────────────────────────────────
+function ImagePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const [files, setFiles] = useState<{ name: string; url: string }[]>([]);
+
+  function openPicker() {
+    setOpen(o => !o);
+    if (files.length === 0) {
+      fetch('/api/images').then(r => r.json()).then(d => setFiles(d.files ?? [])).catch(() => {});
+    }
+  }
+
+  return (
+    <div style={{ position: 'relative', flex: 1 }}>
+      <div style={{ display: 'flex', gap: 6 }}>
+        <input
+          style={{ ...INP, fontSize: 11, flex: 1 }}
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          placeholder="/images/filename.jpg or https://..."
+        />
+        <button type="button" title="Browse public/images" style={{ ...IBTN, width: 'auto', padding: '0 10px', fontSize: 11, flexShrink: 0 }} onClick={openPicker}>
+          📁
+        </button>
+        {value && <button type="button" title="Clear" style={IBTN} onClick={() => onChange('')}>✗</button>}
+      </div>
+      {open && (
+        <div style={{ position: 'absolute', top: '110%', left: 0, right: 0, zIndex: 100, background: '#fff', border: '2px solid #111827', borderRadius: 10, boxShadow: '0 6px 0 #111827', maxHeight: 200, overflowY: 'auto' }}>
+          {files.length === 0
+            ? <div style={{ padding: '10px 14px', fontSize: 11, color: '#9A6A58' }}>No images in public/images/ yet</div>
+            : files.map(f => (
+              <div key={f.url} onClick={() => { onChange(f.url); setOpen(false); }} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 12px', cursor: 'pointer', borderBottom: '1px solid #EADFD8' }}
+                onMouseEnter={e => (e.currentTarget.style.background = '#FFF7F0')}
+                onMouseLeave={e => (e.currentTarget.style.background = '#fff')}>
+                <img src={f.url} style={{ width: 40, height: 28, objectFit: 'cover', borderRadius: 5, border: '1.5px solid #111827', flexShrink: 0 }} />
+                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11 }}>{f.name}</span>
+                <span style={{ marginLeft: 'auto', fontSize: 10, color: '#9A6A58', fontFamily: "'JetBrains Mono',monospace" }}>{f.url}</span>
+              </div>
+            ))
+          }
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── main ─────────────────────────────────────────────────────────────────────
 export default function AdminPage() {
   const [data,     setData]     = useState<AD>(defaults);
@@ -143,10 +189,37 @@ export default function AdminPage() {
     upd(d => { ((d[sec] as unknown as Record<string,unknown[]>)[key]).splice(i,1); });
   }
 
+  function stripBase64(d: AD): AD {
+    const c = JSON.parse(JSON.stringify(d)) as AD;
+    const clean = (items: Item[]) => items.forEach(item =>
+      item.slides?.forEach(sl => { if (sl.image?.startsWith('data:')) sl.image = ''; })
+    );
+    clean(c.games);
+    clean(c.projects);
+    if (c.about.image?.startsWith('data:')) c.about.image = '';
+    return c;
+  }
+
   function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    setDirty(false);
-    flash('Saved ✓');
+    const json = JSON.stringify(data);
+    try {
+      localStorage.setItem(STORAGE_KEY, json);
+      setDirty(false);
+      flash('Saved ✓');
+    } catch (e) {
+      if (e instanceof DOMException && (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED')) {
+        const stripped = stripBase64(data);
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(stripped));
+          setDirty(false);
+          flash('Saved — embedded images removed. Use image URLs instead.');
+        } catch {
+          flash('Save failed: data too large. Remove images or text.');
+        }
+      } else {
+        flash('Save failed.');
+      }
+    }
   }
 
   function reset() {
@@ -296,17 +369,11 @@ export default function AdminPage() {
                               }
                               <input style={{...INP, flex:1}} value={sl.label} onChange={e=>setSlide(list,i,j,'label',e.target.value)} placeholder="Screen name"/>
                               <div style={{ width:120, flexShrink:0 }}><GradSelect value={sl.grad} onChange={v=>setSlide(list,i,j,'grad',v)}/></div>
-                              <label title="Upload image" style={{ cursor:'pointer', width:34, height:34, flexShrink:0, background:'#fff', border:'2px solid #111827', borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', fontSize:13, fontWeight:800 }}>
-                                ↑
-                                <input type="file" accept="image/*" style={{ display:'none' }} onChange={e => {
-                                  const file = e.target.files?.[0]; if (!file) return;
-                                  const reader = new FileReader();
-                                  reader.onload = () => setSlide(list,i,j,'image', reader.result as string);
-                                  reader.readAsDataURL(file);
-                                }} />
-                              </label>
-                              {sl.image && <button style={IBTN} title="Remove image" onClick={()=>setSlide(list,i,j,'image','')}>✗</button>}
                               <button style={IBTN} onClick={()=>removeSlide(list,i,j)}>✕</button>
+                            </div>
+                            <div style={{ display:'flex', gap:8, alignItems:'center' }}>
+                              <span style={{ fontSize:9, fontWeight:700, letterSpacing:1, textTransform:'uppercase', color:'#9A6A58', flexShrink:0 }}>Image</span>
+                              <ImagePicker value={sl.image ?? ''} onChange={v=>setSlide(list,i,j,'image',v)}/>
                             </div>
                             <div style={{ display:'flex', gap:8, alignItems:'center' }}>
                               <span style={{ fontSize:9, fontWeight:700, letterSpacing:1, textTransform:'uppercase', color:'#9A6A58', flexShrink:0 }}>YouTube</span>
