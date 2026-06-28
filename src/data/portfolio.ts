@@ -47,13 +47,14 @@ export function slide0Bg(slides: Slide[] | undefined, fallbackCover: string): st
 export const brand = { name: 'Butter', accentWord: '.dev' };
 
 export const heroData = {
-  kicker: 'Ramiro Santos · Developer',
+  kicker: 'Ramiro Santos · C++ Game Engineer · Austin, TX',
+  credential: 'M.S. Computer Science',
   headline: 'Games that feel good to play.',
-  subhead: 'Developer who makes games. From the first mechanic to the last bug fix.',
+  subhead: 'C++ game engineer with an M.S. in Computer Science. I build the systems that make games feel right.',
 };
 
 export const stats = [
-  { value: '3+', label: 'Years Making Games' },
+  { value: '1+', label: 'Years Making Games' },
   { value: '6', label: 'Games Shipped' },
   { value: '3', label: 'Research Papers' },
   { value: '50K+', label: 'Players Reached' },
@@ -123,7 +124,7 @@ export const experience = [
 ];
 
 export const education = [
-  { period: '2024 — 2026', title: 'M.A. Computer Science', org: 'University of Texas Rio Grande Valley', desc: '' },
+  { period: '2024 — 2026', title: 'M.S. Computer Science', org: 'University of Texas Rio Grande Valley', desc: '' },
   { period: '2021 — 2023', title: 'B.S. Computer Science', org: 'University of Texas Rio Grande Valley', desc: '' },
 ];
 
@@ -139,12 +140,12 @@ export const research = [
 export const about = {
   image: '/images/about.jpg',
   heading: 'Hi, I\'m Ramiro.',
-  bio: 'A solo developer who ships games end to end — from the gameplay loop and engine work to art direction, audio, and release. I care about systems that are deep but feel effortless, and I sweat the final 10% that makes a game sing.',
+  bio: 'C++ game engineer and college instructor based in Austin, TX. I teach C and C++ at the community college level and build games focused on the systems and visual effects that make gameplay feel alive. I\'m drawn to the mechanics and rendering details that players feel more than they see.',
   lookingForTitle: 'What I\'m looking for',
   lookingFor: [
-    { dot: '#14B8A6', text: 'A gameplay or engine role on a small, ambitious team' },
-    { dot: '#FFDA14', text: 'Studios that ship and iterate fast' },
-    { dot: '#EC4899', text: 'Contract work on netcode, tools, or performance' },
+    { dot: '#14B8A6', text: 'C++ game engineering roles in gameplay, graphics, or engine systems' },
+    { dot: '#FFDA14', text: 'Teams that care about visual polish and game feel' },
+    { dot: '#EC4899', text: 'Studios where deep technical craft meets creative ambition' },
   ],
 };
 

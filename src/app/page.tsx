@@ -139,7 +139,8 @@ export default function HomePage() {
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.05fr 0.95fr', gap: isMobile ? 36 : 48, alignItems: 'center', position: 'relative' }}>
           <div className="reveal">
             <div style={{ fontSize: isMobile ? 11 : 13, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>{heroData.kicker}</div>
-            <h1 style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: isMobile ? 52 : 74, lineHeight: 0.92, margin: '14px 0 0', color: '#fff', letterSpacing: -1.5, textShadow: '0 5px 0 rgba(17,24,39,0.4)' }}>{heroData.headline}</h1>
+            <h1 style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: isMobile ? 52 : 74, lineHeight: 0.92, margin: '0px 0 0', color: '#fff', letterSpacing: -1.5, textShadow: '0 5px 0 rgba(17,24,39,0.4)' }}>{heroData.headline}</h1>
+            <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: 1, color: 'rgba(255,255,255,0.9)', marginTop: 22 }}>M.S. Computer Science</div>
             <p style={{ maxWidth: 520, margin: '22px 0 0', fontSize: isMobile ? 14 : 15, lineHeight: 1.75, color: 'rgba(255,255,255,0.92)' }}>{heroData.subhead}</p>
             <div style={{ display: 'flex', gap: 12, marginTop: 30, flexWrap: 'wrap' }}>
               <a href="#games"    style={{ textDecoration: 'none', background: '#FFDA14', color: '#111827', border: '2px solid #111827', borderRadius: 999, padding: '14px 26px', fontSize: 13, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', boxShadow: '0 6px 0 #111827' }}>View Games</a>
@@ -202,6 +203,46 @@ export default function HomePage() {
       </section>
 
       {/* FEATURED GAMES */}
+      {/* FEATURED PROJECTS */}
+      <section id="projects" style={{ scrollMarginTop: 90, background: 'var(--s-projects)', padding: isMobile ? '56px 16px' : '80px 24px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ maxWidth: 1180, margin: '0 auto', position: 'relative' }}>
+          <div className="reveal" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginBottom: 48 }}>
+            <div>
+              <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--s-eyebrow)' }}>Beyond the arcade</span>
+              <h2 style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: isMobile ? 36 : 46, margin: '8px 0 0', color: 'var(--s-head)', textTransform: 'uppercase', letterSpacing: 0.5 }}>Featured Projects</h2>
+            </div>
+            <Link href="/projects" style={{ textDecoration: 'none', background: 'var(--card)', color: 'var(--card-ink)', border: '2px solid var(--border)', borderRadius: 999, padding: '11px 22px', fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', boxShadow: '0 5px 0 var(--shadow)', whiteSpace: 'nowrap' }}>View All</Link>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+            {displayedProjects.slice(0, 3).map((p, i) => (
+              <div key={p.id} className="reveal" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '2fr 3fr', gap: isMobile ? 20 : 36, alignItems: 'center', background: 'var(--card)', border: '2px solid var(--border)', borderRadius: 18, padding: isMobile ? 20 : 32, boxShadow: '8px 8px 0 var(--shadow)' }}>
+                <div style={{ position: 'relative', height: isMobile ? 180 : 220, border: '2px solid var(--border)', borderRadius: 12, overflow: 'hidden', background: slide0Bg(p.slides, p.cover), display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  {!p.slides?.length && <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 26, letterSpacing: 2, color: coverInk(p.cover), textTransform: 'uppercase' }}>{p.n}</span>}
+                  <span style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(17,24,39,0.6)', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 10px', borderRadius: 999 }}>{p.tag}</span>
+                  <span style={{ position: 'absolute', top: 10, right: 10, background: 'rgba(17,24,39,0.6)', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 1, padding: '4px 10px', borderRadius: 999 }}>{p.year}</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  <div>
+                    <h3 style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: isMobile ? 22 : 28, margin: 0, textTransform: 'uppercase', color: 'var(--card-ink)', letterSpacing: 0.5 }}>{p.title}</h3>
+                    <span style={{ fontSize: 12, color: 'var(--card-soft)', fontWeight: 600 }}>{p.genre} · {p.engine} · {p.role}</span>
+                  </div>
+                  <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: 'var(--card-ink)', opacity: 0.85 }}>{p.desc}</p>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                    {(p.tech || []).map((t: string) => (
+                      <span key={t} style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', background: 'var(--s-projects)', color: 'var(--s-eyebrow)', border: '1.5px solid var(--border)', borderRadius: 999, padding: '4px 10px' }}>{t}</span>
+                    ))}
+                  </div>
+                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                    {p.link && p.link !== '#' && <a href={p.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', background: accent, color: '#111827', border: '2px solid #111827', borderRadius: 999, padding: '10px 20px', fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', boxShadow: '0 4px 0 #111827' }}>View Project</a>}
+                    {p.repo && p.repo !== '#' && <a href={p.repo} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', background: 'var(--card)', color: 'var(--card-ink)', border: '2px solid var(--border)', borderRadius: 999, padding: '10px 20px', fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', boxShadow: '0 4px 0 var(--shadow)' }}>GitHub</a>}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="games" style={{ scrollMarginTop: 90, background: 'var(--feature)', padding: isMobile ? '56px 16px' : '80px 24px' }}>
         <div style={{ maxWidth: 1180, margin: '0 auto' }}>
           <div className="reveal" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginBottom: 36 }}>
@@ -223,37 +264,6 @@ export default function HomePage() {
                     <span style={{ fontSize: 12, color: 'var(--card-soft)' }}>{g.genre}</span>
                   </div>
                   <button onClick={() => openModal('game', games.indexOf(g))} style={{ width: 44, height: 44, flexShrink: 0, borderRadius: '50%', background: accent, border: '2px solid #111827', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, boxShadow: '0 4px 0 #111827', cursor: 'pointer', padding: 0 }}>▶</button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURED PROJECTS */}
-      <section id="projects" style={{ scrollMarginTop: 90, background: 'var(--s-projects)', padding: isMobile ? '56px 16px' : '80px 24px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ maxWidth: 1180, margin: '0 auto', position: 'relative' }}>
-          <div className="reveal" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginBottom: 36 }}>
-            <div>
-              <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--s-eyebrow)' }}>Beyond the arcade</span>
-              <h2 style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: isMobile ? 36 : 46, margin: '8px 0 0', color: 'var(--s-head)', textTransform: 'uppercase', letterSpacing: 0.5 }}>Featured Projects</h2>
-              {!isMobile && <p style={{ maxWidth: 640, margin: '12px 0 0', fontSize: 14, lineHeight: 1.7, color: 'var(--s-body)' }}>The same engineering applied beyond games — full-stack apps, APIs and AI tools. Tap any card to see what it does, what it&apos;s built with, and where to view it.</p>}
-            </div>
-            <Link href="/projects" style={{ textDecoration: 'none', background: 'var(--card)', color: 'var(--card-ink)', border: '2px solid var(--border)', borderRadius: 999, padding: '11px 22px', fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', boxShadow: '0 5px 0 var(--shadow)', whiteSpace: 'nowrap' }}>View All</Link>
-          </div>
-          <div className="reveal" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: 18 }}>
-            {displayedProjects.map(p => (
-              <div key={p.id} style={{ background: 'var(--card)', border: '2px solid var(--border)', borderRadius: 14, padding: 12, boxShadow: '8px 8px 0 var(--shadow)' }}>
-                <div style={{ position: 'relative', height: 140, border: '2px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: slide0Bg(p.slides, p.cover), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(17,24,39,0.55)', color: '#fff', fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 9px', borderRadius: 999 }}>{p.tag}</span>
-                  {!p.slides?.length && <span style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 22, letterSpacing: 2, color: coverInk(p.cover), textTransform: 'uppercase' }}>{p.n}</span>}
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '14px 6px 6px' }}>
-                  <div>
-                    <h3 style={{ fontFamily: "'Fredoka',sans-serif", fontWeight: 700, fontSize: 19, margin: 0, textTransform: 'uppercase', color: 'var(--card-ink)' }}>{p.title}</h3>
-                    <span style={{ fontSize: 12, color: 'var(--card-soft)' }}>{p.genre}</span>
-                  </div>
-                  <button onClick={() => openModal('project', projects.indexOf(p))} style={{ width: 44, height: 44, flexShrink: 0, borderRadius: '50%', background: accent, border: '2px solid #111827', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, boxShadow: '0 4px 0 #111827', cursor: 'pointer', padding: 0 }}>▶</button>
                 </div>
               </div>
             ))}

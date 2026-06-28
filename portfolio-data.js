@@ -29,12 +29,13 @@
   var DEFAULTS = {
     brand: { name: 'Ramiro', accentWord: '.dev' },
     hero: {
-      kicker: 'Ramiro Santos · Solo Game Developer',
+      kicker: 'Ramiro Santos · C++ Game Engineer · Austin, TX',
+      credential: 'M.S. Computer Science',
       headline: 'Games that feel good to play.',
-      subhead: 'I design and build original games end to end — engine, gameplay, and the last 10% of polish. I turn hard systems into tight, joyful play.',
+      subhead: 'C++ game engineer with an M.S. in Computer Science. I build the systems that make games feel right.',
     },
     stats: [
-      { value: '3+', label: 'Years Making Games' },
+      { value: '1+', label: 'Years Making Games' },
       { value: '6', label: 'Games Shipped' },
       { value: '3', label: 'Research Papers' },
       { value: '50K+', label: 'Players Reached' },
@@ -125,12 +126,12 @@
     ],
     about: {
       heading: 'Hi, I’m Ramiro.',
-      bio: 'A solo developer who ships games end to end — from the gameplay loop and engine work to art direction, audio, and release. I care about systems that are deep but feel effortless, and I sweat the final 10% that makes a game sing.',
-      lookingForTitle: 'What I’m looking for',
+      bio: ‘C++ game engineer and college instructor based in Austin, TX. I teach C and C++ at the community college level and build games focused on the systems and visual effects that make gameplay feel alive. I\’m drawn to the mechanics and rendering details that players feel more than they see.’,
+      lookingForTitle: ‘What I\’m looking for’,
       lookingFor: [
-        { dot: '#14B8A6', text: 'A gameplay or engine role on a small, ambitious team' },
-        { dot: '#FFDA14', text: 'Studios that ship and iterate fast' },
-        { dot: '#EC4899', text: 'Contract work on netcode, tools, or performance' },
+        { dot: ‘#14B8A6’, text: ‘C++ game engineering roles in gameplay, graphics, or engine systems’ },
+        { dot: ‘#FFDA14’, text: ‘Teams that care about visual polish and game feel’ },
+        { dot: ‘#EC4899’, text: ‘Studios where deep technical craft meets creative ambition’ },
       ],
     },
     contact: {
@@ -159,8 +160,15 @@
       var raw = localStorage.getItem(KEY);
       if (!raw) return base;
       var saved = JSON.parse(raw);
-      // top-level merge: saved value wins when present
-      Object.keys(saved || {}).forEach(function (k) { base[k] = saved[k]; });
+      // merge: for plain objects do a shallow merge so new default fields survive
+      Object.keys(saved || {}).forEach(function (k) {
+        var s = saved[k], b = base[k];
+        if (s && typeof s === 'object' && !Array.isArray(s) && b && typeof b === 'object' && !Array.isArray(b)) {
+          base[k] = Object.assign({}, b, s);
+        } else {
+          base[k] = s;
+        }
+      });
       return base;
     } catch (e) { return base; }
   }
